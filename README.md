@@ -1,5 +1,7 @@
 # COMP 150 Lab 3 - Flow of Control
 
+# lab exercise make times table setup
+
 In this lab:
 
 * How to `import` classes.
@@ -7,6 +9,7 @@ In this lab:
 * What is a class?
 * Objects vs primitives. Reference vs value.
 * What methods are, and how to write `static` methods.
+* How to use the Debugger in IntelliJ.
 * What boolean expressions are, and how to write and evaluate them.
 * How to use `if`/`else` statements to decide what actions to take.
 * How to use `for`, `while`, and `do while` loops to repeat actions.
@@ -120,9 +123,141 @@ Process finished with exit code 0
 
 The truth is, this question is a little too broad for the scope of this discussion. We are not going to all-inclusively define classes. We are going to instead talk about two common types of classes, and the significance of classes in the Object-Oriented paradigm.
 
+### Object Blueprints
 
+Most classes will serve as a blueprint for a new type of Object. Classes like this can then be used to create Objects (called **instances** of the class) which behave as the class defines. That is, the class defines how its **instance** Objects store, mutate and provide access to their stored data, and how they interacts with that data.
+
+The `Scanner` class is a perfect example; it provides a blueprint for `Scanner` objects, defining how they are created and how they function.
+
+Another way to think of an object-blueprint class is as a definition of a new data type and of the necessary methods to use that data type and allow it to interact in whatever context is necessary.
+
+In future labs, we will be exploring how to create classes that serve as object blueprints. These types of classes are the heart of Object-Oriented Programming.
+
+### Collections of `static` Methods and Constants
+
+Some classes will serve as collections of related `static` methods. We'll talk more about `methods` in the next section, but they are essentially sequences of statements whose purpose is either to calculate a value or to perform an action. 
+
+`static` methods are called directly from a class, and do not require a reference to an individual instance of the class. Nonstatic methods, on the other hand, are called from an individual instance of the class and may reference data stored by that instance.
+
+Consider, for example, the `Math` class. It consists of:
+
+* methods that are called directly from the class itself, like `Math.pow` used in the last lab.
+* constants, also accessed directly through the class, like `Math.PI`.
+
+An Object of type `Math` is never created; we never make a `new Math()` like we did with the `Scanner`.
 
 ## Methods
+
+As mentioned in the previous section, a **method** is essentially sequences of statements whose purpose is either to calculate a desired value or to perform a desired action or sequence of actions.
+
+### Declaring and Defining `static` Methods
+
+`static` method declarations and definitions appear in the **scope** of the class body. Recall, a class definition looks like this:
+
+```java
+class <identifier> { <body }
+```
+
+(althought for readability's sake we usually write it like this:
+
+```java
+class <identifier>
+{
+	<body>
+}
+```
+
+Something is said to be in the **scope** of the class body if it is in the curly braces `{}` denoting the boundaries of the class body. Specifically, `static` method declarations appear in the class body but not inside any nested blocks.
+
+The simplest `static` method definitions look like this:
+
+```java
+static <returnType> <identifier> ( <argument_list> )
+{
+	<body>
+}	
+```
+
+where:
+
+* `<returnType>` is the desired data type for the output.
+* `<identifier>` is the name that will be used to **call** (i.e. reference, perform) the method.
+* The `<argument_list>` is, well, a list of **arguments**, separated by commas. 
+
+Recall that **arguments** are the input data for the function. They are structured much like declarations; the consist of a data type followed by an identifier.
+
+Consider the method definition in the `Calculator` class below:
+
+```java
+class Calculator
+{
+	static int subtract (int operand_1, int operand_2)
+	{
+		return (operand_1 - operand_2);
+	}
+}
+```
+
+We can tell from the header `static int subtract (int operand_1, int operand_2)`
+that:
+
+* The method is `static`, so it will be called directly through the `Calculator` class as `Calculator.subtract`.
+* It's return (i.e. output) is an `int` value.
+* It takes two `int` values as inputs, and refers to them as `operand_1` and `operand_2` during its calculation.
+
+The body of the method above consists of a single statement: `return (operand_1 - operand_2);`
+
+The `return` keywords means "leave the method" or "return to the line from which the method was called". If it is followed by an expression, then the value of that expression is the output or product of the method.
+
+[QUESTION] what is the output of the method above?
+
+Methods can also simply **do something** and not have an output. Methods like this are called `void` methods because their return type is `void`.
+
+Consider the example below of a class containing a `void` method:
+
+```java
+/*
+    The StringSlinger class will consist of data and methods to print random nonsense.
+
+    It is intended to facilitate the process of printing bad, uninformative feedback to
+    spite your user.
+ */
+
+// import a class for generating random primitive data
+import java.util.Random;
+
+class StringSlinger
+{
+    // define an array of 4 Strings, called nonsense.
+    final static String[] nonsense = {
+            "YEW WOT",
+            "Karen please...",
+            "oof",
+            "No, Patrick, the lid..."
+    };
+
+    // construct a Random object to serve as a generator of random indexes
+    final static Random generator = new Random();
+
+    // select a random string from the nonsense array above and print it
+    static void hurlRandomNonsense()
+    {
+        // Generate a random index to access the nonesense array
+        int index = generator.nextInt( nonsense.length );
+
+        // Print the message located at the specified index in the nonsense array
+        System.out.println( nonsense[index] );
+    }
+}
+```
+
+# BOOKMARK todo explain class above
+
+If a `void` method reaches the end of its body without a `return` keyword, it returns nothing. If a non-`void` method can reach the end of its body without a `return`, it will not compile.
+
+### Class Methods vs Instance Methods
+
+### Methods vs Functions
 
 ## Boolean Expressions
 
