@@ -350,6 +350,10 @@ In most languages, there are both **methods** and **functions**. The two are sim
 
 In Java, there is no such thing as a function; nothing can be defined outside of a class, so every definition is associated with either a class or with instances of that class.
 
+[EXERCISE] Create a `Client` class to test the `StringSlinger` class.
+
+[EXERCISE] Write a method.
+
 ## Using IntelliJ's Debugger
 
 IntelliJ has a built-in debugger, which lets you step through your code line by line and check the values of variables and constants in the current scope.
@@ -435,7 +439,44 @@ Many programmers are tempted to debug their software by printing status messages
 
 ## Boolean Expressions
 
-#BOOKMARK
+Recall that an **expression** is a combination of variables, operations and values that yields a resulting value, and that the primitive data type `boolean` stores **truth values** (`true` or `false`).
+
+A **boolean expression** is an expression which evaluates to a `boolean` value of `true` or `false`.
+
+The simplest boolean expressions are the `boolean` literal values themselves, `true` and `false`. Next in line are the identifiers of `boolean` variables, which evaluate to the value of said variables.
+
+### Relational Operators
+
+Java includes **relational operators** which return `true` or `false` depending on the values of their operands (which must be numerical primitives):
+
+**OPERATOR** | **SAMPLE EXPRESSION** | **VALUE**
+:----------: | :-------------------: | :-------:
+`<`          | `x < y`               | `true` if `x` is less than `y`; `false` otherwise
+`<=`         | `x <= y`              | `true` if `x` is less than or equal to `y`; `false` otherwise
+`==`         | `x == y`              | `true` if `x` equals `y`; `false` otherwise
+`!=`         | `x != y`              | `true` if `x` does not equal `y`; `false` if `x` does equal `y`
+`>=`         | `x >= y`              | `true` if `x` is greater than or equal to `y`; `false` otherwise
+`>`          | `x > y`               | `true` if `x` is greater than `y`; `false` otherwise
+
+[EXERCISE] comparisons
+
+### Boolean Operators
+
+Java also includes **boolean operators**, which allow calculation of `boolean` values using boolean logic. Each boolean operator takes boolean expressions as operands, and outputs a boolean value based on the values of those expressions. In the following table, `a` and `b` are both assumed to be placeholders for boolean values or for boolean expressions.
+
+**OPERATOR** | **MEANING** | **SAMPLE EXPRESSION** | **VALUE**
+:----------: | :---------: | :-------------------: | :-------:
+`&&`         | *and*       | `a && b`              | `true` if `a` and `b` are both `true`; `false` otherwise
+`||`         | *or*        | `a || b`              | `false` if `a` and `b` are both `false`; `true` otherwise
+`!`          | *not*       | `!a`                  | `true` if `a` is `false`; `false` if `a` is `true`
+
+If you refer to the [Java 8 operator precedence](https://github.com/arewhyaeenn/COMP_150_LAB_2_JAVA_FUNDAMENTALS/blob/master/figures/operatorPrecedence.png) you'll see that, when evalutating logical expressions, first *not* operations (`!`) are performed from right to left, then *and* (`&&`) operations from left to right, and finally *or* (`||`) from left to right. Of course, parenthesis can be used to specify a different order.
+
+[EXERCISE] boolean operations on boolean literals and boolean variables
+
+[EXERCISE] boolean operations with relational operators
+
+# BOOKMARK
 
 ## `if`/`else`
 
