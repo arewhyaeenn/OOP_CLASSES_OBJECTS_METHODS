@@ -1,13 +1,12 @@
 # COMP 150 Lab 3 - Flow of Control
 
-# lab exercise make times table setup
-
 In this lab:
 
 * How to `import` classes.
 * How to use the `Scanner` class to get user input.
+* What is an object?
 * What is a class?
-* Wrapper classes. TODO
+* Wrapper classes?
 * What methods are, and how to write `static` methods.
 * How to use the Debugger in IntelliJ.
 * What boolean expressions are, and how to write and evaluate them.
@@ -119,6 +118,12 @@ Radishes are the coolest vegetable : true
 
 Process finished with exit code 0
 ```
+
+## What is an Object?
+
+### Reference vs Value
+
+#BOOKMARK add gliffy diagrams
 
 ## What is a Class?
 
@@ -481,7 +486,7 @@ If you refer to the [Java 8 operator precedence](https://github.com/arewhyaeenn/
 
 ## `if`/`else`
 
-`if` and `else` statements can be used in coalition with boolean expressions to perform different actions based on properties of data. We will cover the format of `if` and `else` statements, but first consider this example:
+`if` and `else` statements can be used in coalition with boolean expressions to select which blocks to run. We'll start our discussion of `if` and `else` with an example:
 
 ```java
 import java.util.Scanner;
@@ -911,29 +916,87 @@ while (i < 10)
 
 The loop above starts `i` at `0` and increments `i` by `1` at the beginning of each iteration, so eventually the loop condition `i < 10` will be `false`. In each iteration, if `i` is even (i.e. if the remainder when `i` divided by `2` is `0`) after being incremented then the loop body starts over; otherwise, the loop body continues to print `i` before starting over.
 
-[EXERCISE] What values are printed by the loop above? verify by running...
+[EXERCISE] What values are printed by the loop above? verify by running with the debugger!
 
 ## `switch`
 
 `switch` statements can be used to when a `byte`, `short`, `int`, `char` or `String` expression has one of a finite number of values and the action taken that needs to be taken depends on that value.
 
-Essentially, the `switch` take an input that is an expression with one of these types, and 
+Essentially, the `switch` takes as input an expression with one of these types, and performs the corresponding `case` associated with the expression's value.
+
+In the following example, the `dayToInt` takes as an argument the name of a week, and outputs 1 for Sunday, 2 for Monday, etc.
+
+```java
+class DateUtils
+{
+    static int dayToInt(String dayName)
+    {
+        int dayInt;
+        switch (dayName)
+        {
+            case "Sunday":
+                dayInt = 1;
+                break;
+            case "Monday":
+                dayInt = 2;
+                break;
+            case "Tuesday":
+                dayInt = 3;
+                break;
+            case "Wednesday":
+                dayInt = 4;
+                break;
+            case "Thursday":
+                dayInt = 5;
+                break;
+            case "Friday":
+                dayInt = 6;
+                break;
+            case "Saturday":
+                dayInt = 7;
+                break;
+            default:
+                dayInt = 0;
+        }
+
+        return dayInt;
+    }
+}
+```
+
+
+[EXERCISE] what does it output if the input is not the name of a day?
+
+[EXERCISE] create a client class to test the `dayToInt` method. you should ensure that it outputs the correct value for every day of the week, and for a variety of invalid inputs.
+
+[EXERCISE] :
+
+* Add a `static` method to the `UserWrangler` class called `getMonthName` which
+	* requires no arguments
+	* prompts the user for the name of a month until the user enters a valid month name (use a loop)
+	* returns the valid month name entered by the user
+* Add to the `DateUtils` class. In it, create a `static` method called `monthToInt` which:
+	* requires a String argument (the name of a month)
+		* returns an `int` (1 for January, 2 for February, etc, 0 for invalid)
+* Create a client class to test both `getMonthName` and `monthToInt` by using the output from `getMonthName` as the input for `monthToInt` and printing the resulting `int`
 
 `switch`s also works with the accepted primitives' respective wrapper classes `Byte`, `Short`, `Integer` and `Character`, as well as with enumerated types (`enum`s) which we will discuss in a future lab.
 
-#BOOKMARK
-
 ### `switch` and `if` Statements
 
-## Arrays
+You've likely noticed that anything that can be done with a `switch` can also be done with an `if`/`else`. If the number of possibilities is sufficiently large, the `switch` is faster. However, each possibility in an `if`/`else` chain or a `switch` must be typed "by hand" and if that number is large enough for its effect on performance to be relevant, you should probably be organizing the selection a different way.
 
-### Visualizing
+Generally, the decision to use a `switch` or an `if`/`else` chain comes down to readability in context and the preference of the programmer.
+
+## Arrays
 
 ### Indexing
 
 ### Strings and Arrays
 
 ### Traversing
+
+### Nestability
 
 ## Objects vs Primitives; Reference vs Value
 
