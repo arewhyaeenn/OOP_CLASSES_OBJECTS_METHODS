@@ -61,7 +61,7 @@ Consider the following program:
 ```java
 import java.util.Scanner;
 
-public class FillInTheCode
+class FillInTheCode
 {
     public static void main(String[] args)
     {
@@ -129,7 +129,7 @@ The truth is, this question is a little too broad for the scope of this discussi
 
 Most classes will serve as a blueprint for a new type of Object. Classes like this can then be used to create Objects (called **instances** of the class) which behave as the class defines. That is, the class defines how its **instance** Objects store, mutate and provide access to their stored data, and how they interacts with that data.
 
-The `Scanner` class is a perfect example; it provides a blueprint for `Scanner` objects, defining how they are created and how they function.
+The `Scanner` class is a perfect example; it provides a blueprint for `Scanner` objects, defining how they are created and how they function. We've used this definition to create and use `Scanner` objects.
 
 Another way to think of an object-blueprint class is as a definition of a new data type and of the necessary methods to use that data type and allow it to interact in whatever context is necessary.
 
@@ -151,6 +151,8 @@ An Object of type `Math` is never created; we never make a `new Math()` like we 
 ### Client Classes
 
 Some classes consist of little more than a main method, in which data and methods defined in other classes are accessed and used. These classes are sometimes referred to as program **entry points**. Small client classes are a very common part of software development; they are used to test components of (often quite large) systems of software.
+
+## TODO String Class
 
 ## Class Variables and Constants
 
@@ -476,19 +478,447 @@ If you refer to the [Java 8 operator precedence](https://github.com/arewhyaeenn/
 
 [EXERCISE] boolean operations with relational operators
 
-# BOOKMARK
+### TODO Short Circuit Evaluation
 
 ## `if`/`else`
 
-## `while`
+`if` and `else` statements can be used in coalition with boolean expressions to perform different actions based on properties of data. We will cover the format of `if` and `else` statements, but first consider this example:
 
-## `do while`
+```java
+import java.util.Scanner;
 
-## `for`
+class MyClass
+{
+	public static void main(String[] args)
+	{
+		Scanner scan = new Scanner( System.in );
+		
+		System.out.println("Enter an integer : ")
+		long userInput = scan.nextLong();
+		
+		if (userInput > 10)
+		{
+			System.out.println("Your input was greater than 10.");
+		}
+		else
+		{
+			System.out.println("Your input was not greater than 10.");
+		}
+	}
+}
+```
+
+The program above prompts the user for an integer, and stores their response in a variable called `userInput`. It then prints out a message, telling the user whether their input was greater than `10` or not.
+
+[EXERCISE] Edit the program above to tell the user whether their response equals `10`.
+
+###<a name="if"></a>`if` Statements
+
+The simplest `if` statements look like: `if ( <boolean_expression> ) { <true_block> }`.
+
+If the boolean expression in the parenthesis is true, then the statements in the true block are executed; otherwise they are not. In the snippet below, `x` has value `5`. So, when the `if` statement's boolean expression, `x == 5`, is evaluated, it evaluates to `true`. Because the boolean expression is true, the print statement in the true block runs.
+
+```java
+int x = 5;
+if (x == 5)
+{
+	System.out.println("mmhmmm");
+}
+```
+
+### `if`/`else` Statements
+
+An `if` statement can include a second block, called the `else` block, with instructions to execute if the boolean expression is `false`:
+
+```java
+if ( <boolean_expression> )
+{
+	<true_block>
+}
+else
+{
+	<false_block>
+}
+```
+
+The `else` keyword precedes the false block, i.e. the instructions to execute if the boolean expression is `false`. We can expand the example `if` statement above to include an `else`:
+
+```java
+int x = <int_literal>;
+if (x == 5)
+{
+	System.out.println("mmhmmm");
+}
+else
+{
+	System.out.println("nuh uh");
+}
+```
+
+Here if the value assigned to `x` is `5`, then the message "mmhmmm" is printed; otherwise "nuh uh" is printed.
+
+In an `if` statement, the block(s) which may or may not be executed depending on the value(s) of boolean expression(s) are called **conditional blocks**. This is because they are blocks whose contained instructions are only executed if specific conditions (specifically, those defined in the boolean expression) are met.
+
+[EXERCISE] simple boolean, complex body
+
+[EXERCISE] complex boolean, simple body
+
+### Statement Nestability
+
+If statements are structured and interpreted in the following form: `if ( <boolean_expression> ) <statement> else <statement>`.
+
+As shown above, the trailing `else <statement>` is optional. Recall that a block can be used wherever a statement can; in the examples above, the two `<statement>`s were blocks.
+
+Because `if` statements are a type of statement, the `<statement>` slots above could be `if` statements. In other words, `if` statements are **nestable**; one `if` statement can be a part of (i.e. can be **nested in**) another `if` statement. This means that chains of `if` statements can be made as described in the next section.
+
+### `if`/`else if`/`else` Chains
+
+When the `<statement>` trailing the `else` keyword is, itself, an `if` statement, you end up with something like this:
+
+```java
+if ( <boolean_expression> )
+{
+	...
+}
+else if ( <boolean_expression> )
+{
+	...
+}
+else
+{
+	...
+}
+```
+
+Consider executing a program like the one above. If the first boolean expression is `true`, then the first block is entered and executed. Then, an `else` is reached, but because the corresponding `if`'s boolean expression was `true`, the `<statement>` trailing the `else` is not executed. In the program above, this `<statement>` is an `if` statement with an `else` of its own, all of which is not executed.
+
+In other words, in a chain of `if`/`else if` statements, only one `true` block will be entered.
+
+Consider this example:
+
+```java
+import java.util.Scanner;
+
+class DoorGuard
+{
+    static String CURRENT_PASSWORD = "password123";
+    static String OLD_PASSWORD = "password";
+
+    public static void main(String[] args)
+    {
+        Scanner keyboard = new Scanner( System.in );
+        System.out.println("What's the password?");
+        String userResponse = keyboard.next();
+
+        if ( userResponse.equals(CURRENT_PASSWORD) )
+        {
+            System.out.println("Welcome back!");
+        }
+        else if ( userResponse.equals(OLD_PASSWORD) )
+        {
+            System.out.println("That's the old password...");
+        }
+        else
+        {
+            System.out.println("Get lost!");
+        }
+    }
+}
+```
+
+Notice that the boolean expressions above don't use the relational operators; the instead make calls to the `userResponse` `String`'s `equals` method. This is because `String`s are objects, not primitives, so the `==` operator would check if they are the **same object** (i.e. if they reference the same location in memory); we want to check if they contain the same characters, which is defined in the `String` class's `equals` method.
+
+[EXERCISE] What happens if the user enters the current password in the example above? What if they enter the old password? What if they enter something else entirely?
+
+[EXERCISE] Go on an if-else flow adventure with the debugger
+
+### `if` Statements, Blocks, and Nestability
+
+The conditional blocks in `if` statements are, well, blocks; they can contain a sequence of statements. These contained statements can also be `if` statements (or any other type of statement). For example, the program below consists of an `if` statement whose conditional blocks contain more `if` statements.
+
+```java
+import java.util.Scanner;
+
+class FreeJacket
+{
+    final static String YES_RESPONSE = "yes";
+    final static String NO_RESPONSE = "no";
+
+    public static void main(String[] args)
+    {
+        Scanner keyboard = new Scanner( System.in );
+        String userResponse;
+
+        System.out.println("Are you cold? (yes / no)");
+        userResponse = keyboard.next();
+
+        if ( userResponse.equals(YES_RESPONSE) )
+        {
+            System.out.println("Would you like a FREE JACKET? (yes / no)");
+            userResponse = keyboard.next();
+            if ( userResponse.equals(YES_RESPONSE) )
+            {
+                System.out.println("Here ya go!");
+            }
+            else if ( userResponse.equals(NO_RESPONSE) )
+            {
+                System.out.println("Who likes comfort anyway?");
+            }
+            else
+            {
+                System.out.println("\"yes\" or \"no\" ... ");
+            }
+        }
+        else if ( userResponse.equals(NO_RESPONSE) )
+        {
+            System.out.println("Liar! Do you want a FREE JACKET? (yes / no)");
+            userResponse = keyboard.next();
+            if ( userResponse.equals(YES_RESPONSE) )
+            {
+                System.out.println("I knew you were cold...");
+            }
+            else if ( userResponse.equals(NO_RESPONSE) )
+            {
+                System.out.println("But it's free...");
+            }
+            else
+            {
+                System.out.println("\"yes\" or \"no\" ... ");
+            }
+        }
+        else
+        {
+            System.out.println("\"yes\" or \"no\" ... ");
+        }
+    }
+}
+```
+
+[EXERCISE] Read the program above. Theorize about how it should behave. When you believe you know what it will do in any case (i.e. with any sequence of user inputs) run it to test your theory. You may want to run with the debugger, so you can step through line by line and see what's happening!
+
+[EXERCISE] Write a program to specification using nested ifs
+
+## `while` Loops
+
+Sometimes it is necessary to repeat an action multiple times. This can be done with a **loop**. There are several types of loops in Java. The simplest type of loop is the `while` loop. `while` loops look like this:
+
+```java
+while ( <boolean_expression> )
+{
+	<loop_body>
+}
+```
+
+As long as the boolean expression, called the **loop condition** remains `true`, the loop will keep repeating the statements in the **loop body**. The loop essentially works as follows:
+
+1. Evaluate the loop condition is `true`
+2. If the loop condition is `true`, execute the instructions in the loop body, then start over on step 1.
+3. Otherwise, resume execution on the line after the loop body.
+
+Each repetition of the instructions in the loop body is called an **iteration**. To **iterate** is to go through an iteration.
+
+The snippet below should iterate 10 times; it should print out the numbers `0` through `9`, and should leave `i` with value `10` after the loop has completed.
+
+```java
+int i = 0;
+while (i < 10)
+{
+	System.out.println(i);
+	++i;
+}
+```
+
+[EXERCISE] Create a simple program the the while loop above in its main method. Run with debugger...
+
+[EXERCISE] Read a while loop example and answer questions about it.
+
+[EXERCISE] Write a program involving a while loop to meet specifications.
+
+## `do while` Loops
+
+The `do while` loop is very similar to the `while` loop. There are two differences. The first difference is in how the loop itself is written. A `do while` loop is written like this:
+
+```java
+do {
+	<loop_body>
+} while ( <boolean_expression> );
+```
+
+The second difference is that the `while` loop checks the loop condition before the first iteration, where the `do while` loop does not. In other words, a `while` loop can iterate 0 times if the loop condition is initially `false`, but a `do while` loop will **always** iterate at least once.
+
+Anything that can be done with a `do while` loop can also be done with a `while` loop. The `do while` loop above could be written identically with a `while` loop like this:
+
+```java
+<loop_body>
+while ( boolean_expression )
+{
+	<loop_body>
+}
+```
+
+Sometimes, a loop body must iterate at least once, and it is easier (more concise) to write a `do while` loop. For example, loops are often used to get valid user inputs with the following sequence of events:
+
+* prompt the user for a response
+* read the user's response
+* validate the user's response (check if it is valid)
+* if the user's response is invalid, start over
+* if the user's response is valid, continue
+
+Consider for example the `UserWrangler` class:
+
+```java
+/*
+    The UserWrangler class will define methods to facilitate console interactions
+    with the user (prompting, interpreting responses, validating responses...).
+ */
+
+import java.util.Scanner;
+
+class UserWrangler
+{
+    final static String YES_RESPONSE = "yes";
+    final static String NO_RESPONSE = "no";
+    final static Scanner keyboard = new Scanner( System.in );
+
+    static boolean getYesNoResponse(String prompt)
+    {
+        String userResponse;
+
+        // repeatedly ask the user for a response (and tell them what their options are)
+        // until that idiot figures out how to type "yes" or "no" ;)
+        do {
+            System.out.println(prompt + " (" + YES_RESPONSE + " / " + NO_RESPONSE + ")");
+            userResponse = keyboard.next();
+        } while ( !(userResponse.equals(YES_RESPONSE) || userResponse.equals(NO_RESPONSE)) );
+
+        return userResponse.equals(YES_RESPONSE);
+    }
+}
+```
+
+At the moment, the class above contains a single method, called `getYesNoResponse`. It takes as an argument a `String`, storing the prompt (i.e. what to print to request information from the user). It returns a `boolean` value; `true` if the user enters "yes" and `false` if the user enters "no". It allows a programmer to ask the user a yes or no question, and be given the result as a `boolean` with a single method call.
+
+[EXERCISE] Use the client below to step through `UserWrangler.getYesNoResponse` with the Debugger.
+
+```java
+class Client
+{
+    public static void main(String[] args)
+    {
+        boolean userYesNoResponse;
+
+        while (true)
+        {
+            userYesNoResponse = UserWrangler.getYesNoResponse("ARA YA READY, KIDS!?");
+            if (userYesNoResponse)
+            {
+                System.out.println("OOOOOOOHHHHHHHHHHH!!!!!");
+            }
+            else
+            {
+                System.out.println("oh...");
+            }
+        }
+    }
+}
+```
+
+[EXERCISE] or maybe just a paragraph, something to point out the infinite loop in the client above
+
+[EXERCISE] rewrite the FreeJacket client above to use StringWrangler.getYesNoResponse
+
+## `for` Loops
+
+`for` loops are another loop variant. Anything that can be done with a `for` loop can also be done with a `while` loop, but in some circumstances `for` loops provide more concision.
+
+`for` loops are structured as follows:
+
+```java
+for (<initializing_statement> ; <boolean_expression> ; <end_of_iteration_statement>)
+{
+	<loop_body>
+}
+```	
+
+The function much like `while` loops do, but come with a bit more of the setup encased in the statement syntax. The three statements in the `for` loop's parenthesis are as follows:
+
+* `<initializing_statement>` : executed before the first iteration.
+* `<boolean_expression>` : evaluated before each iteration; if `true`, keep looping; if `false`, stop looping.
+* `<end_of_iteration_statement>` : executed after each iteration, before evaluating the boolean expression for the next iteration.
+
+Consider, for example, the while loop from above:
+
+```java
+int i = 0;
+while (i < 10)
+{
+	System.out.println(i);
+	++i;
+}
+```
+
+A (nearly) identical `for` loop can be constructed using the same initial setup, loop condition, and end-of-loop statement:
+
+```java
+for (int i = 0; i < 10; ++i)
+{
+	System.out.println(i);
+}
+```
+
+These two loops are identical in output; they both print the same numbers. There is  difference, however. The `while` loop example declares `i` outside of the scope of the loop, so `i` still exists outside of the loop (it has a value of `10` when the loop completes). The `for` loop, on the other hand, declares `i` inside the scope of the loop, so `i` doesn't exist after the loop finishes iterating.
+
+[EXERCISE] print i after the while loop, find out what happens when you try after the for loop
+
+[EXERCISE] modify the for loop above so it behaves exactly like the while loop (i is still accessible afterwards).
+
+## `break` and `continue`
+
+A `break` statement can be used to stop a loop's iterating, without finishing the current iteration. Consider this snippet:
+
+```java
+int i = 0;
+while (true)
+{
+	if (i == 10)
+	{
+		break;
+	}
+	System.out.println(i);
+	++i;
+}
+```
+
+Note that in the loop above, the loop condition is simply `true`. This means that, in theory, the loop could keep iterating forever. It will only stop iterating if it encounters a `break` statement or a `return` statement.
+
+`i` starts at `0`, and is incrememented by `1` at the end of each iteration with `++i;`; eventually, it will be `10`, at which time the `if` condition `i == 10` will be `true`, and the `break;` statement will execute. When this happens, the `while` loop ceases looping without finishing the current iteration.
+
+[EXERCISE] what is the first number printed by the loop above? what is the last? verify by running...
+
+A `continue` statement will cause the loop to start iteration again from the beginning of the loop body if the loop condition is still `true`.
+
+```java
+int i = 0;
+while (i < 10)
+{
+	++i;
+	if (i % 2 == 0)
+	{
+		continue;
+	}
+	System.out.println(i);
+}
+```
+
+The loop above starts `i` at `0` and increments `i` by `1` at the beginning of each iteration, so eventually the loop condition `i < 10` will be `false`. In each iteration, if `i` is even (i.e. if the remainder when `i` divided by `2` is `0`) after being incremented then the loop body starts over; otherwise, the loop body continues to print `i` before starting over.
+
+[EXERCISE] What values are printed by the loop above? verify by running...
 
 ## `switch`
 
-## Using the Debugger in IntelliJ
+# BOOKMARK
+
+### `switch` and `if` Statements
 
 ## Arrays
 
@@ -503,3 +933,14 @@ If you refer to the [Java 8 operator precedence](https://github.com/arewhyaeenn/
 ## Objects vs Primitives; Reference vs Value
 
 ### Strings again...
+
+
+
+
+
+
+
+
+
+
+
