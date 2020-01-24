@@ -7,6 +7,7 @@ In this lab:
 * How to `import` classes.
 * How to use the `Scanner` class to get user input.
 * What is a class?
+* Wrapper classes. TODO
 * What methods are, and how to write `static` methods.
 * How to use the Debugger in IntelliJ.
 * What boolean expressions are, and how to write and evaluate them.
@@ -15,8 +16,6 @@ In this lab:
 * How to use the `break` and `continue` keywords.
 * How to use a `switch`.
 * How to visualize the flow of control in a program.
-
-# TRUNCATE BELOW, MOVE TO NEXT LAB
 * What an array is.
 * Strings and arrays.
 * Objects vs primitives. Reference vs value.
@@ -916,7 +915,13 @@ The loop above starts `i` at `0` and increments `i` by `1` at the beginning of e
 
 ## `switch`
 
-# BOOKMARK
+`switch` statements can be used to when a `byte`, `short`, `int`, `char` or `String` expression has one of a finite number of values and the action taken that needs to be taken depends on that value.
+
+Essentially, the `switch` take an input that is an expression with one of these types, and 
+
+`switch`s also works with the accepted primitives' respective wrapper classes `Byte`, `Short`, `Integer` and `Character`, as well as with enumerated types (`enum`s) which we will discuss in a future lab.
+
+#BOOKMARK
 
 ### `switch` and `if` Statements
 
