@@ -222,7 +222,7 @@ Recall that objects are passed by reference! `point_1 == point_2` isn't comparin
 
 In Java, `String`s are a hellspawn, a cruelty inflicted on developers by James Gosling. `String`s are objects, technically, and in some contexts they behave like objects, but in other contexts they can behave like primitives, but in some contexts treating them like primitives leads to issues and errors.
 
-`String`s are objects. If you always treat `String`s like objects, smooth sailing. If you sometimes treat them like primitives. For instance, `String`s can be compared to eachother with the `==` operator like primitives, if they were created without the `new` keyword (i.e. without an object construction), but if they were created as references (via object construction, using the `new` keyword) then the `==` operator will compare addresses instead of values like in the `ReferenceEquality` class above. Treating `String`'s like objects and using their `equals` method to check for equal values will always work, regardless of how the `String` was declared.
+`String`s are objects. If you always treat `String`s like objects, smooth sailing. Sometimes, if you treat them like primitives, nothing blows up. For instance, `String`s can be compared to eachother with the `==` operator like primitives, if they were created without the `new` keyword (i.e. without an object construction), but if they were created as references (via object construction, using the `new` keyword) then the `==` operator will compare addresses instead of values like in the `ReferenceEquality` class above. Treating `String`'s like objects and using their `equals` method to check for equal values will always work, regardless of how the `String` was declared.
 
 [EXERCISE] Predict the output of each snippet below. Then, run the snippet and test your prediction! 
 
@@ -615,8 +615,17 @@ Now, the variable `tempInFahrenheit` is visible in the variables pane. It has be
 
 Many programmers are tempted to debug their software by printing status messages to the console stating the values of variables and other pertinent information. This is generally bad practice except in niche cases where the debugger isn't helpful for one reason or another. It's bad practice for a few reasons, but the primary one is that it is **tedious** and **slow**, whereas using the debugger is **easy** and **fast** once you're used to it!
 
-[EXERCISE] The `Euclid` class below defines a method called `gcd` which finds the [greatest common divisor](https://en.wikipedia.org/wiki/Greatest_common_divisor) of two non-negative `int`s `x` and `y` (or outputs `0`, if one of the inputs is negative). It contains some functionality that we haven't explored yet. But, we don't necessarily need to understand how it works internally in order to use it or test it; we just need to know what it claims to do and test that it does, well, that. Create a client class to test the `gcd` method. Step through it with the debugger, and see if you can figure out how it works! Try to step through the algorithm by hand on the white boards.
+[EXERCISE] The `Euclid` class below defines a method called `gcd` which finds the [greatest common divisor](https://en.wikipedia.org/wiki/Greatest_common_divisor) of two non-negative `int`s `x` and `y` (or outputs `0`, if one of the inputs is negative). It contains some functionality that we haven't explored yet. But, we don't necessarily need to understand how it works internally in order to use it or test it; we just need to know what it claims to do and test that it does, well, that. Create a client class to test the `gcd` method.
 
+[EXERCISE] Step through the `gcd` with the debugger, and see if you can figure out how it works!
 
+## Lab Assignment
 
+### Task 1
+
+Write a program which prompts the user for `int` values and uses them to create three instances of the `Point` class from `java.awt`. Use the `Point` class's `distance` method to calculate the distances between the three points**\*\***. These three distances are the side lengths for a triangle. Calculate and print the perimeter and area of the triangle (check out [Heron's formula](https://en.wikipedia.org/wiki/Heron%27s_formula) for the area).
+
+**\*\*** Not all of the `Point` classes methods are listed on its [API](https://docs.oracle.com/javase/8/docs/api/java/awt/Point.html) directly. Some methods are **inherited** from other classes. These methods are listed in the API at the bottom of the *Method Summary* section, in subsections called **Methods inherited from \<some\_other\_class\>**. We're not going to go in depth on what inheritance is right now; we'll talk about it later in the semester. For now, know that any `Point` can use the methods it inherits from other classes, because it **is** an instance of those classes. The `Point` class inherits from the `java.awt.geom.Point2D` class, which means a `Point` is a `Point2D`, but with some extra stuff. So, a `Point` can do anything a `Point2D` can do, including using and being an argument for the `Point2D.distance` method. Click the `distance` methods in the **Methods inherited from class java.awt.geom.Point2D** section.
+
+### Task 2
 
