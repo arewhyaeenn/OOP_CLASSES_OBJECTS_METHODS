@@ -41,7 +41,7 @@ Scanner keyboard = new Scanner( System.in );
 
 In the example above, `System.in` is specified as an argument for the `Scanner` constructor, so the `Scanner` named `keyboard` will receive its input from the console.
 
-Once the `Scanner` has been constructed, it can be used to read and parse inputs using the methods.
+Once the `Scanner` has been constructed, it can be used to read and parse inputs using its methods.
 
 Consider the following program:
 
@@ -77,9 +77,11 @@ class FillInTheCode
 }
 ```
 
-In the program above, a `Scanner` with identifier `scan` is created, and is then used to read user's responses from the console after questions are printed to the console. Note that there is an extra call to the `nextLine` method before the second question. This is due to an oddity of how the `Scanner` interacts with its input source.
+In the program above, a `Scanner` with identifier `scan` is created, and is then used to read user's responses from the console after questions are printed to the console.
 
-The `Scanner` essentially reads characters from the input source one at a time and parses them into the desired data types (if possible). It has methods to read all of the primitive data types, named accordingly; `nextInt` reads an `int`, `nextDouble` reads a `double` and so on... It also has methods to read different types of `String` data from its input stream; among these are `next`, which reads the next "word" (i.e. all characters up to the next white space), and `nextLine`, which reads all characters up through the next newline character (`'\n'`).
+Note that there is an extra call to the `nextLine` method before the second question. This is due to an oddity of how the `Scanner` interacts with its input source.
+
+The `Scanner` reads characters from the input source one at a time and parses them into the desired data types (if possible). It has methods to read all of the primitive data types, named accordingly; `nextInt` reads an `int`, `nextDouble` reads a `double` and so on... It also has methods to read different types of `String` data from its input stream; among these are `next`, which reads the next "word" (i.e. all characters up to the next white space), and `nextLine`, which reads all characters up through the next newline character (`'\n'`).
 
 When a `Scanner` calls a method to read a primitive or the `next` method to read a word, it leaves the newline on the of the input. This will cause the next `newLine` call to be blank; it reads until the first newline, and the first character in the stream is a newline. So, that extra call to the `nextLine` method before the second question in the program above is to read this residual newline character out of the input stream, which in turn allows the following `nextLine` call to get the user's input instead of a blank line.
 
@@ -108,11 +110,165 @@ Radishes are the coolest vegetable : true
 Process finished with exit code 0
 ```
 
+[EXERCISE] Write a program which:
+
+* Prompts the user for two integer values `min` and `max` (check out the `Random` class in the `java.util` package).
+* Generates a random `int` called `secretNumber` between `min` and `max`, inclusive.
+* Prompts the user for a third `int`, called `guess`.
+* Tells the user:
+	* What the secret number was.
+	* How far off their guess was (use an absolute value, there is a method in the `Math` library for it).
+
 ## What is an Object?
 
-### Reference vs Value
+### Value vs Reference
 
-#BOOKMARK add gliffy diagrams
+The primary difference between object data and primitive data is that primive data is **passed by value** whereas object data is **passed by reference**. A reference to an object is an address in memory; it is essnetially a location where the object's data can be found.
+
+The `Integer` class constructs `Integer` objects, which are essentially the object-version of the `int` primitive. The `Integer` class is one of the **wrapper classes**, which we'll talk more about soon. In the picture below, the `x`'s value is simply the `int` value `1`. `y`'s value is **Ox3A28213A**, which is an address (or location) in memory, where the `Integer` object referenced by `y` is located. The key takeaway here is that `x`'s value is the integer value itself, whereas `y`'s value is an address, denoting where the integer value is stored.
+
+![Value vs Reference](./figures/value_vs_reference.png)
+
+In the image below, two `int` variables `x` and `y` are created. `x` is assigned the value `1`, and `y` is assigned `x`. Because primitives are passed by value, the statement `int y = x;` assigns `y`'s value to a copy of `x`'s value.
+
+![Primitives](./figures/primitives.png)
+
+The same setup leads to a different result with `Integers`. In the image below, two `Integer` variables are declared and assigned. Because `Integers` are objects, not primitives, they are passed by reference. In other word, the address that `a` uses to reference the `Integer` with value `1` is copied into `b`, so `a` and `b` both reference the same address, and are therefore two separate references to the same object.
+
+![Objects Same Address](./figures/objects_same_address.png)
+
+Compare the picture above to the one below. 
+
+![Objects Different Address](./figures/objects_different_address.png)
+
+These "references" are often referred to as "pointers". Java does all of the reference work under the hood, but it is helpful in debugging to understand the difference between reference and value. If you want to learn more about pointers, check out [this sophomore level lab](https://github.com/arewhyaeenn/COMP_232_LAB_1_2_C_TUTORIAL).
+
+### Shared Reference Example with `java.awt.Point`
+
+The ability to reference the same Object from multiple variables can be useful. It can also be the cause of bugs if not properly accounted for!
+
+The `Point` class from the `java.awt` constructs objects which store integer `(x, y)` coordinates on the Cartesian plane. You can find its documentation [here](https://docs.oracle.com/javase/8/docs/api/java/awt/Point.html).
+
+Consider the example below:
+
+```java
+import java.awt.Point;
+
+class ReferenceDemo
+{
+    public static void main(String[] args)
+    {
+        // create a Point object with coordinates (0, 0)
+        Point origin = new Point(0, 0);
+
+        // create a second point at the same location
+        Point otherPoint = origin;
+
+        // move the second point to (4, 3)
+        otherPoint.setLocation(4, 3);
+
+        // print out both points
+        System.out.println("The origin is at " + origin.toString());
+        System.out.println("The other point is at " + otherPoint.toString());
+        // oof
+    }
+}
+```
+
+[EXERCISE] Run the program above. Notice that in the output, the `origin` has moved to `(4,3)`. What goes wrong? Are all of the comments accurate?
+
+[EXERCISE] Fix the program above.
+
+```java
+import java.awt.Point;
+
+class ReferenceEquality
+{
+    public static void main(String[] args)
+    {
+        // create a Point at coords (0, 0)
+        Point point_1 = new Point(0, 0);
+
+        // create a second Point at coords (0, 0)
+        Point point_2 = new Point(0, 0);
+
+        // The points are equal right?
+        System.out.println(
+                point_1.toString() +
+                " equals " +
+                point_2.toString() +
+                " : " +
+                (point_1 == point_2)
+        );
+    }
+}
+```
+
+If you run the program above, you will get the following output:
+
+```
+java.awt.Point[x=0,y=0] equals java.awt.Point[x=0,y=0] : false
+
+Process finished with exit code 0
+```
+
+There are two `Point` objects `point_1` and `point_2` with the same coorinates. `point_1 == point_2` evaluates to `false`. Why?
+
+Recall that objects are passed by reference! `point_1 == point_2` isn't comparing the **values** of the two `Point`s, it is comparing the **references** to those points. That is, the `==` operator is checking if the location of `point_1` in memory is the same as that of `point_2`. Two objects cannot be written in the same place, so these addresses can only be equal if the objects being compared are actually references to **the same object**. `point_1` and `point_2` do contain the same data, but they are two distinct points written at two distinct locations in memory, so their addresses are different.
+
+[EXERCISE] Fix the program above to check if the two points have the same coordinates, not if they have the same address. HINT: Use the [Point API](https://docs.oracle.com/javase/8/docs/api/java/awt/Point.html).
+
+### `String`: Primitive or Object?
+
+In Java, `String`s are a hellspawn, a cruelty inflicted on developers by James Gosling. `String`s are objects, technically, and in some contexts they behave like objects, but in other contexts they can behave like primitives, but in some contexts treating them like primitives leads to issues and errors.
+
+`String`s are objects. If you always treat `String`s like objects, smooth sailing. If you sometimes treat them like primitives. For instance, `String`s can be compared to eachother with the `==` operator like primitives, if they were created without the `new` keyword (i.e. without an object construction), but if they were created as references (via object construction, using the `new` keyword) then the `==` operator will compare addresses instead of values like in the `ReferenceEquality` class above. Treating `String`'s like objects and using their `equals` method to check for equal values will always work, regardless of how the `String` was declared.
+
+[EXERCISE] Predict the output of each snippet below. Then, run the snippet and test your prediction! 
+
+```java
+String s1 = "asdf";
+String s2 = "asdf";
+
+System.out.println( s1 == s2 );
+```
+
+```java
+String s1 = "asdf";
+String s2 = "asdf";
+
+System.out.println( s1.equals(s2) );
+```
+
+```java
+String s1 = new String("asdf");
+String s2 = "asdf";
+
+System.out.println( s1 == s2 );
+```
+
+```java
+String s1 = new String("asdf");
+String s2 = "asdf";
+
+System.out.println( s1.equals(s2) );
+```
+
+```java
+String s1 = new String("asdf");
+String s2 = new String("asdf");
+
+System.out.println( s1 == s2 );
+```
+
+```java
+String s1 = new String("asdf");
+String s2 = new String("asdf");
+
+System.out.println( s1.equals(s2) );
+```
+
+The good news is that `String`s will always behave if you treat them like objects, even when they are not references.
 
 ## What is a Class?
 
@@ -145,6 +301,8 @@ An Object of type `Math` is never created; we never make a `new Math()` like we 
 
 Some classes consist of little more than a main method, in which data and methods defined in other classes are accessed and used. These classes are sometimes referred to as program **entry points**. Small client classes are a very common part of software development; they are used to test components of (often quite large) systems of software.
 
+Most of the classes we've written so far have been client classes.
+
 ## Class Variables and Constants
 
 Constants and variables can be declared and initialized in the class body.
@@ -160,6 +318,30 @@ class TemperatureConversion
 ```
 
 The `TemperatureConversion` class above consists of two constant numbers which are useful in conversions between temperatures in Fahrenheit and Celcius. These constants can be accessed for use in other classes.
+
+We can access these values from other classes in the same package. We'll talk about package structure in a future lab, but for now, create two classes in the same project. One should be the `TemperatureConversion` class above, and one the `TemperatureConversionClient` class below:
+
+```java
+class TemperatureConversionClient
+{
+    public static void main(String[] args)
+    {
+        System.out.println(
+                "A change by 1 degree Celcius is a change by " +
+                TemperatureConversion.CELC_FAHREN_RATIO +
+                " degrees Fahrenheit."
+        );
+
+        System.out.println(
+                "Water freezes at " +
+                TemperatureConversion.FAHREN_FREEZE_POINT + 
+                " degrees Fahrenheit."
+        );
+    }
+}
+```
+
+When you run the `TemperatureConversionClient` client above, it accesses the constants defined in the `TemperatureConversion` class in order to print their values.
 
 ## Methods
 
@@ -226,6 +408,8 @@ The `return` keywords means "leave the method" or "return to the line from which
 
 [EXERCISE] What is the output of the method above?
 
+[EXERCISE] Complete the `Calculator` class above by adding integer methods `add`, `multiply`, `divide` and `modulus`. Then, create a client class to test the methods defined in the `Calculator` class.
+
 ### Classes with Methods and Data
 
 Classes can contain a mix of data (in the form of constants and variables) and methods, and these pieces can interact. Below, we expand the `TemperatureConversion` class from the previous section to include methods for performing conversions:
@@ -249,19 +433,20 @@ class TemperatureConversion
     // return : temperature in celcius, as a double
     static double fahrenToCelc(double tempInFahren)
     {
-        return (tempInFahren - FAHREN_FREEZE_POINT) / CELC_FAHREN_RATIO;
+        // TODO
+        return 0; // replace this return with a correct conversion
     }
 }
 ```
 
 Classes like this generally do not have main methods; they instead provide a collection of constants, variables and methods to facilitate some tasks in other programs. The `TemperatureConversion` class above can be accessed by other classes in the same project.
 
-Create a new IntelliJ project, and in create two new Java classes in the src folder. The first class should be the `TemperatureConversion` class above. The second should be called `Client`. In it, put the `Client` class definition below. This `Client` class defines a main method and uses (**calls**) a method defined in `TemperatureConversion`.
+Create a new IntelliJ project, and in it create two new Java classes in the src folder. The first class should be the `TemperatureConversion` class above. The second should be the client class below. This client class defines a main method and uses (**calls**) a method defined in `TemperatureConversion`.
 
 <a name="exClientClass"></a>
 
 ```java
-class Client
+class TemperatureConversionClient
 {
     public static void main(String[] args)
     {
@@ -276,7 +461,9 @@ class Client
 }
 ```
 
-If you run the `Client` class above, it should use the `celcToFahren` method from the `TemperatureConversion` class to convert the Celcius temperature of `100` to the corresponding Fahrenheit (`212`) and print both temperatures.
+If you run the client class above, it should use the `celcToFahren` method from the `TemperatureConversion` class to convert the Celcius temperature of `100` to the corresponding Fahrenheit (`212`) and print both temperatures.
+
+[EXERCISE] Complete the `TemperatureConversion` class above by filling out the `fahrenToCelc` method. Expand the client class above to test this new method.
 
 ### `void` Methods
 
@@ -321,31 +508,29 @@ class StringSlinger
 }
 ```
 
-The class above is significantly has a few things we haven't discussed yet, so let's go through them.
+The class above has a few things we haven't discussed yet, so let's go through them.
 
 Let's first look at the constant `nonsense`. `nonsense` is a `String[]` (i.e. an array of `String`s). We'll discuss arrays in more detail later; for now it is sufficient to understand that the array stores the four `String`s seen in its assignment, and that they are associated with (and can be accessed using) the integers `0`, `1`, `2`, and `3`.
 
 There is also an `import` statement, which imports the `Random` class from `java.util`. Instances of the `Random` class can be used to generated random primitive values.
 
-In the `hurlRandomNonsense` method, the instantiated `Random` object (called `generator`) is used to generate random integers. Specifically, it is used to generate random non-negative integers less than `nonsense.length`, i.e. less than `4` (the length of the `nonsense` array). That is, it is used to generate random integers from the list `0`, `1`, `2`, and `3`.
+In the `hurlRandomNonsense` method, the instantiated `Random` object (called `generator`) is used to generate random integers. Specifically, it is used to generate random non-negative integers less than `nonsense.length`, i.e. less than `4` (the length of the `nonsense` array). That is, `generator` is used to generate random integers with values `0`, `1`, `2`, and `3`.
 
 These random integers are then used to access the corresponding `String` in the `nonsense` array, so it can be printed. The end result is: `hurlRandomNonsense` selects a random element from the `nonsense` array and prints it.
 
 Note that `hurlRandomNonsense` is of type `void`; it does not `return` anything. In fact, it doesn't even have a `return` keyword, so its execution ends when it reaches the closing curly braces `}` denoting the end of the method body.
 
+[EXERCISE] Create a client class to test the `StringSlinger` class's `hurlRandomNonsense` method.
+
 ### Class Methods vs Instance Methods
 
-All of the methods we've defined so far have been `static`; these methods are associated with a class, and are accessed through the class. Instance methods are instead accessed through a class instance. For example, the `nextInt` method of the `Random` class is an instance method, and is accessed through an instantiated object as you can see in [this example](#exStringSlinger). We will discuss instance methods in much more detail in future labs.
+All of the methods we've defined so far have been `static`; these methods are associated with a class, and are accessed through the class. Instance methods are instead accessed through a class instance (an object). For example, the `nextInt` method of the `Random` class is an instance method, and is accessed through an instantiated object as you can see in [the example above](#exStringSlinger). We will discuss instance methods in much more detail in future labs.
 
 ### Methods vs Functions
 
 In most languages, there are both **methods** and **functions**. The two are similar; they are both essentially sequences of statements which may or may not reference input data to perform an action or set of actions or to output a result. The difference is that methods are associated with an object or class, whereas functions are standalone processes.
 
 In Java, there is no such thing as a function; nothing can be defined outside of a class, so every definition is associated with either a class or with instances of that class.
-
-[EXERCISE] Create a `Client` class to test the `StringSlinger` class.
-
-[EXERCISE] Write a method.
 
 ## Using IntelliJ's Debugger
 
@@ -430,12 +615,7 @@ Now, the variable `tempInFahrenheit` is visible in the variables pane. It has be
 
 Many programmers are tempted to debug their software by printing status messages to the console stating the values of variables and other pertinent information. This is generally bad practice except in niche cases where the debugger isn't helpful for one reason or another. It's bad practice for a few reasons, but the primary one is that it is **tedious** and **slow**, whereas using the debugger is **easy** and **fast** once you're used to it!
 
-
-
-
-
-
-
+[EXERCISE] The `Euclid` class below defines a method called `gcd` which finds the [greatest common divisor](https://en.wikipedia.org/wiki/Greatest_common_divisor) of two non-negative `int`s `x` and `y` (or outputs `0`, if one of the inputs is negative). It contains some functionality that we haven't explored yet. But, we don't necessarily need to understand how it works internally in order to use it or test it; we just need to know what it claims to do and test that it does, well, that. Create a client class to test the `gcd` method. Step through it with the debugger, and see if you can figure out how it works! Try to step through the algorithm by hand on the white boards.
 
 
 
