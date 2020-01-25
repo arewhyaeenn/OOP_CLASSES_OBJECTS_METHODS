@@ -3,7 +3,7 @@
 In this lab:
 
 * How to `import` classes.
-* How to use the `Scanner` class to get user input.
+* How to use the `Scanner` class to read input data.
 * What is an object?
 * Objects vs primitives. Reference vs value.
 * What is a class?
@@ -13,11 +13,11 @@ In this lab:
 
 ## Importing
 
-**packages** contain organized sets of classes, generally with some unifying purpose. They can also contain smaller packages, known as **sub packages**.
+**packages** contain organized sets of classes, generally with some unifying purpose. They can also contain smaller packages, known as **subpackages**.
 
 If you check the [Java 8 API](https://docs.oracle.com/javase/8/docs/api/), you can see a list of packages available in the Java 8 Standard Edition platform (these are the packages that are available in your Java Development Kit you installed in week 1).
 
-Classes can be imported using `import` statements, which are generally at the top of the program outside of the class definition. `import` statments consist of the `import` keywords followed by the name of the package being imported, a `.` (accessor operator) to access a member of that package, and then the class name (the package member being accessed). They look like this: `import <package>.<class>;`.
+Classes can be imported using `import` statements, which are generally at the top of the program outside of the class definition. `import` statments consist of the `import` keyword followed by the name of the package being imported, a `.` (accessor operator) to access a member of that package, and then the class name (the package member being accessed). They look like this: `import <package>.<class>;`.
 
 An example can be found in the previous lab, where we imported the `Scanner` class from the `util` subpackage of the `java` package with the statement:
 
@@ -25,13 +25,15 @@ An example can be found in the previous lab, where we imported the `Scanner` cla
 import java.util.Scanner;
 ```
 
-Note that the class name `Scanner` is in `PascalCase`. This is a standard among almost all Java programmers.
+Here, the `Scanner` is a class from the `util` subpackage of the `java` package.
+
+Note that the class name `Scanner` is in `PascalCase` while the package and subpackage names `java` and `util` are in `camelCase`. This is a standard across most Java packages.
 
 ## The `Scanner` Class
 
-We used the `Scanner` class briefly in the previous lab, so you might be familiar with it already. It can be used to parse primitive data from an input source. The input source might be a text file, a `String`, or an `InputStream`. For now, we don't need to know what an `InputStream` is, we just need to now that there is one called `System.in` which corresponds to input typed in the console, so if we use that `InputStream` as a source, the `Scanner` can be used to get input from the console and parse it.
+We used the `Scanner` class briefly in the previous lab, so you might be familiar with it already. It can be used to parse primitive data from an input source. The input source might be a text file, a `String`, or an `InputStream`. For now, we don't need to know what an `InputStream` is, we just need to know that there is one called `System.in` which corresponds to input typed in the console, so if we use that `InputStream` as a source, the `Scanner` can be used to get input from the console and parse it.
 
-In order to use a `Scanner`, we must **construct** it. The `Scanner` class is a blueprint, which can be used to construct `Scanner` objects associated with specific input sources. The constructed `Scanner` object is said to be an **instance** of the `Scanner` class.
+In order to use a `Scanner`, we must **construct** it. The `Scanner` class is essentially a blueprint, which can be used to construct `Scanner` objects associated with specific input sources. The constructed `Scanner` object is said to be an **instance** of the `Scanner` class.
 
 Object construction is done with a method called a **constructor**, which provides instructions detailing how to set up the object. A class's constructor is run with the `new` keyword, followed by the name of the class, and the parenthesis containing any **arguments** (i.e. inputs) for the constructor. The resulting object is usually then stored in a variable, so the constructor call is usually the right side of an assignment statement. For example, the statement below constructs a new `Scanner` object called `keyboard`:
 
@@ -48,7 +50,7 @@ Consider the following program:
 ```java
 import java.util.Scanner;
 
-class FillInTheCode
+class Survey
 {
     public static void main(String[] args)
     {
@@ -81,7 +83,8 @@ In the program above, a `Scanner` with identifier `scan` is created, and is then
 
 Note that there is an extra call to the `nextLine` method before the second question. This is due to an oddity of how the `Scanner` interacts with its input source.
 
-The `Scanner` reads characters from the input source one at a time and parses them into the desired data types (if possible). It has methods to read all of the primitive data types, named accordingly; `nextInt` reads an `int`, `nextDouble` reads a `double` and so on... It also has methods to read different types of `String` data from its input stream; among these are `next`, which reads the next "word" (i.e. all characters up to the next white space), and `nextLine`, which reads all characters up through the next newline character (`'\n'`).
+<a name="nextChar"></a>
+The `Scanner` reads characters from the input source one at a time and parses them into the desired data types (if possible). It has methods to read most of the primitive data types, named accordingly; `nextInt` reads an `int`, `nextDouble` reads a `double` and so on... It does not have a `nextChar` method; this is generally done with `next().charAt(0)`, which reads the next word and then picks out the first character of that word. (It also has methods to read different types of `String` data from its input stream; among these are `next`, which reads the next "word" (i.e. all characters up to the next white space), and `nextLine`, which reads all characters up through the next newline character (`'\n'`).
 
 When a `Scanner` calls a method to read a primitive or the `next` method to read a word, it leaves the newline on the of the input. This will cause the next `newLine` call to be blank; it reads until the first newline, and the first character in the stream is a newline. So, that extra call to the `nextLine` method before the second question in the program above is to read this residual newline character out of the input stream, which in turn allows the following `nextLine` call to get the user's input instead of a blank line.
 
@@ -119,11 +122,57 @@ Process finished with exit code 0
 	* What the secret number was.
 	* How far off their guess was (use an absolute value, there is a method in the `Math` library for it).
 
+The `Scanner` can be used for inputs from files as well by replacing `System.in` with a `File` object. A `File` can be constructed using a `String` denoting the name of a file in the project directory of an IntelliJ project. The following program opens a file called `input.txt` in the project directory and prints every word in the file.
+
+```java
+import java.io.File;
+import java.util.Scanner;
+
+class FileClient
+{
+    public static void main(String[] args) throws java.io.FileNotFoundException
+    {
+        File inputFile = new File("input.txt");
+        Scanner inputFileScanner = new Scanner(inputFile);
+
+        while ( inputFileScanner.hasNext() )
+        {
+            System.out.println(inputFileScanner.next());
+        }
+    }
+}
+```
+
+The program above uses a `while` loop, which we'll discuss in the next lab, but you might be able to figure out how it works. `Exception`s will be covered later on, but for now, an `Exception` is data about an error stored in an object. `throw`ing an `Exception` terminates the program (usually with an error message stating what error occured).
+
+You can provide a path from the project folder to a file in the `File` object constructor to open files in other locations. The program below requires that `input.txt` is in the `src` folder.
+
+```java
+import java.io.File;
+import java.util.Scanner;
+
+class FileClient
+{
+    public static void main(String[] args) throws java.io.FileNotFoundException
+    {
+        File inputFile = new File("src/input.txt");
+        Scanner inputFileScanner = new Scanner(inputFile);
+
+        while ( inputFileScanner.hasNext() )
+        {
+            System.out.println(inputFileScanner.next());
+        }
+    }
+}
+```
+
+[EXERCISE] Modify the `Survey` class to read the responses to survey questions from a file instead of the console. You'll also need to create the file and type the responses into it.
+
 ## What is an Object?
 
-### Value vs Reference
+### <a name="valueVsReference"></a> Value vs Reference
 
-The primary difference between object data and primitive data is that primive data is **passed by value** whereas object data is **passed by reference**. A reference to an object is an address in memory; it is essnetially a location where the object's data can be found.
+The primary difference between object data and primitive data is that primive data is **passed by value** whereas object data is **passed by reference**. A reference is an address in memory; it encodes directions to a location. In the case of an object reference, the memory address points to the location at which the object's data is stored.
 
 The `Integer` class constructs `Integer` objects, which are essentially the object-version of the `int` primitive. The `Integer` class is one of the **wrapper classes**, which we'll talk more about soon. In the picture below, the `x`'s value is simply the `int` value `1`. `y`'s value is **Ox3A28213A**, which is an address (or location) in memory, where the `Integer` object referenced by `y` is located. The key takeaway here is that `x`'s value is the integer value itself, whereas `y`'s value is an address, denoting where the integer value is stored.
 
@@ -133,7 +182,7 @@ In the image below, two `int` variables `x` and `y` are created. `x` is assigned
 
 ![Primitives](./figures/primitives.png)
 
-The same setup leads to a different result with `Integers`. In the image below, two `Integer` variables are declared and assigned. Because `Integers` are objects, not primitives, they are passed by reference. In other word, the address that `a` uses to reference the `Integer` with value `1` is copied into `b`, so `a` and `b` both reference the same address, and are therefore two separate references to the same object.
+The same setup leads to a different result with `Integers`. In the image below, two `Integer` variables are declared and assigned. Because `Integers` are objects, not primitives, they are passed by reference. In other words, the address that `a` uses to reference the `Integer` with value `1` is copied into `b`, so `a` and `b` both reference the same address, and are therefore two separate references to the same object data.
 
 ![Objects Same Address](./figures/objects_same_address.png)
 
@@ -141,11 +190,11 @@ Compare the picture above to the one below.
 
 ![Objects Different Address](./figures/objects_different_address.png)
 
-These "references" are often referred to as "pointers". Java does all of the reference work under the hood, but it is helpful in debugging to understand the difference between reference and value. If you want to learn more about pointers, check out [this sophomore level lab](https://github.com/arewhyaeenn/COMP_232_LAB_1_2_C_TUTORIAL).
+These "references" are often referred to as "pointers". Java does basically all of reference work under the hood, but it is helpful to understand the difference between reference and value. If you want to learn more about pointers, check out [this sophomore level lab](https://github.com/arewhyaeenn/COMP_232_LAB_1_2_C_TUTORIAL).
 
-### Shared Reference Example with `java.awt.Point`
+### Shared Reference Example
 
-The ability to reference the same Object from multiple variables can be useful. It can also be the cause of bugs if not properly accounted for!
+The ability to reference the same object from multiple variables can be useful. It can also be the cause of bugs if not properly accounted for!
 
 The `Point` class from the `java.awt` constructs objects which store integer `(x, y)` coordinates on the Cartesian plane. You can find its documentation [here](https://docs.oracle.com/javase/8/docs/api/java/awt/Point.html).
 
@@ -178,6 +227,8 @@ class ReferenceDemo
 [EXERCISE] Run the program above. Notice that in the output, the `origin` has moved to `(4,3)`. What goes wrong? Are all of the comments accurate?
 
 [EXERCISE] Fix the program above.
+
+### Address Comparisons Example
 
 ```java
 import java.awt.Point;
@@ -212,17 +263,15 @@ java.awt.Point[x=0,y=0] equals java.awt.Point[x=0,y=0] : false
 Process finished with exit code 0
 ```
 
-There are two `Point` objects `point_1` and `point_2` with the same coorinates. `point_1 == point_2` evaluates to `false`. Why?
+There are two `Point` objects `point_1` and `point_2` with the same coorinates. `point_1 == point_2` evaluates to `false`. Why? Because objects are passed by reference! `point_1 == point_2` isn't comparing the **values** of the two `Point`s, it is comparing the **references** to those points. That is, the `==` operator is checking if the location of `point_1` in memory is the same as that of `point_2`. Two objects cannot be written in the same place, so these addresses can only be equal if the objects being compared are actually references to **the same object**. `point_1` and `point_2` do contain the same data, but they are two distinct points written at two distinct locations in memory, so their addresses are different.
 
-Recall that objects are passed by reference! `point_1 == point_2` isn't comparing the **values** of the two `Point`s, it is comparing the **references** to those points. That is, the `==` operator is checking if the location of `point_1` in memory is the same as that of `point_2`. Two objects cannot be written in the same place, so these addresses can only be equal if the objects being compared are actually references to **the same object**. `point_1` and `point_2` do contain the same data, but they are two distinct points written at two distinct locations in memory, so their addresses are different.
-
-[EXERCISE] Fix the program above to check if the two points have the same coordinates, not if they have the same address. HINT: Use the [Point API](https://docs.oracle.com/javase/8/docs/api/java/awt/Point.html).
+[EXERCISE] Fix the program above to check if the two points have the same coordinates, not if they have the same address. You may find the [Point API](https://docs.oracle.com/javase/8/docs/api/java/awt/Point.html) useful.
 
 ### `String`: Primitive or Object?
 
-In Java, `String`s are a hellspawn, a cruelty inflicted on developers by James Gosling. `String`s are objects, technically, and in some contexts they behave like objects, but in other contexts they can behave like primitives, but in some contexts treating them like primitives leads to issues and errors.
+Java `String`s are a blight inflicted on developers by James Gosling. `String`s are objects, technically, and in some contexts they behave like objects, but in other contexts they behave like primitives, but in some contexts treating them like primitives leads to issues and errors.
 
-`String`s are objects. If you always treat `String`s like objects, smooth sailing. Sometimes, if you treat them like primitives, nothing blows up. For instance, `String`s can be compared to eachother with the `==` operator like primitives, if they were created without the `new` keyword (i.e. without an object construction), but if they were created as references (via object construction, using the `new` keyword) then the `==` operator will compare addresses instead of values like in the `ReferenceEquality` class above. Treating `String`'s like objects and using their `equals` method to check for equal values will always work, regardless of how the `String` was declared.
+`String`s are objects. If you always treat `String`s like objects, smooth sailing. Sometimes, if you treat them like primitives, nothing blows up. For instance, `String`s can be compared to eachother with the `==` operator like primitives, but only if they were created without the `new` keyword; if they were created as references (via object construction, using the `new` keyword) then the `==` operator will compare addresses instead of values like in the `ReferenceEquality` class above. Treating `String`'s like objects and using their `equals` method to check for equal values will always work, regardless of how the `String` was declared.
 
 [EXERCISE] Predict the output of each snippet below. Then, run the snippet and test your prediction! 
 
@@ -270,23 +319,33 @@ System.out.println( s1.equals(s2) );
 
 The good news is that `String`s will always behave if you treat them like objects, even when they are not references.
 
+### Wrapper Classes
+
+The `Integer` class compared with the `int` primitive [above](#valueVsReference) is one of the **wrapper classes**. Each primitive data type has a corresponding wrapper class. `char` has the `Character` class, `float` the `Float` class, and so on. In addition to being objects, these classes come with utilities in the form of useful methods. Find their documentation under the `java.lang` package in the [API](https://docs.oracle.com/javase/8/docs/api/). Wrapper classes do not need to be imported; `java.lang` is the core of the Java language, and is included in every project without importing.
+
+[EXERCISE] Write a program which prompts the user for a single character and then prints a `boolean` value denoting:
+
+* whether the input character is in the english alphabet
+* whether the input character is a digit
+* the integer value of the character in unicode
+
+HINT: Use the `Character` wrapper class. The `Scanner` doesn't have a `nextChar` method, but we discussed [here](#nextChar) how to get the first character of an input with the `Scanner`.
+
 ## What is a Class?
 
 The truth is, this question is a little too broad for the scope of this discussion. We are not going to all-inclusively define classes. We are going to instead talk about a few common types of classes, and the significance of classes in the Object-Oriented paradigm.
 
 ### Object Blueprints
 
-Most classes will serve as a blueprint for a new type of Object. Classes like this can then be used to create Objects (called **instances** of the class) which behave as the class defines. That is, the class defines how its **instance** Objects store, mutate and provide access to their stored data, and how they interacts with that data.
+Some classes will serve as blueprints for a new types of objects. A class like this can then be used to create objects (called **instances** of the class) which behave as the class defines. That is, the class defines how its **instance** objects store, mutate and provide access to their stored data, and how they interact with that data and with other entities.
 
-The `Scanner` class is a perfect example; it provides a blueprint for `Scanner` objects, defining how they are created and how they function. We've used this definition to create and use `Scanner` objects.
-
-Another way to think of an object-blueprint class is as a definition of a new data type and of the necessary methods to use that data type and allow it to interact in whatever context is necessary.
+The `Scanner` class provides a blueprint for `Scanner` objects, defining how they are created and how they function. We've used this definition to create and use `Scanner` objects in several exercises already.
 
 In future labs, we will be exploring how to create classes that serve as object blueprints. These types of classes are the heart of Object-Oriented Programming.
 
 ### Collections of `static` Methods and Constants
 
-Some classes will serve as collections of related `static` methods. We'll talk more about `methods` in the next section, but they are essentially sequences of statements whose purpose is either to calculate a value or to perform an action. 
+Some classes will serve as collections of related `static` methods. We'll talk more about methods in the next section, but they are essentially sequences of statements whose purpose is either to calculate a value or to perform an action. 
 
 `static` methods are called directly from a class, and do not require a reference to an individual instance of the class. Nonstatic methods, on the other hand, are called from an individual instance of the class and may reference data stored by that instance.
 
@@ -295,11 +354,11 @@ Consider, for example, the `Math` class. It consists of:
 * methods that are called directly from the class itself, like `Math.pow` used in the last lab.
 * constants, also accessed directly through the class, like `Math.PI`.
 
-An Object of type `Math` is never created; we never make a `new Math()` like we did with the `Scanner`.
+An object of type `Math` is never created; we never make a `new Math()` like we did with the `Scanner`.
 
 ### Client Classes
 
-Some classes consist of little more than a main method, in which data and methods defined in other classes are accessed and used. These classes are sometimes referred to as program **entry points**. Small client classes are a very common part of software development; they are used to test components of (often quite large) systems of software.
+Some classes consist of little more than a main method, in which data and methods defined in other files are accessed and used. These classes are generally referred to as **client classes**. Small client classes are a very common part of software development; they are used to test components of (often quite large) systems of software. This is by no means an all inclusive definition of a client.
 
 Most of the classes we've written so far have been client classes.
 
@@ -341,21 +400,21 @@ class TemperatureConversionClient
 }
 ```
 
-When you run the `TemperatureConversionClient` client above, it accesses the constants defined in the `TemperatureConversion` class in order to print their values.
+When you run the `TemperatureConversionClient` above, it accesses the constants defined in the `TemperatureConversion` class in order to print their values.
 
 ## Methods
 
-As mentioned in the previous section, a **method** is essentially sequences of statements whose purpose is either to calculate a desired value or to perform a desired action or sequence of actions.
+As mentioned in the previous section, a **method** is essentially a sequence of statements whose purpose is either to calculate a desired value or to perform a desired action or sequence of actions.
 
 ### Declaring and Defining `static` Methods
 
-`static` method declarations and definitions appear in the **scope** of the class body. Recall, a class definition looks like this:
+`static` method declarations and definitions appear in the **scope** of the class body. Class definitions looks like this:
 
 ```java
 class <identifier> { <body }
 ```
 
-(althought for readability's sake we usually write it like this:
+(althought for readability's sake we usually write them like this:
 
 ```java
 class <identifier>
@@ -406,13 +465,11 @@ The body of the method above consists of a single statement: `return (operand_1 
 
 The `return` keywords means "leave the method" or "return to the line from which the method was called". If it is followed by an expression, then the value of that expression is the output or product of the method.
 
-[EXERCISE] What is the output of the method above?
-
-[EXERCISE] Complete the `Calculator` class above by adding integer methods `add`, `multiply`, `divide` and `modulus`. Then, create a client class to test the methods defined in the `Calculator` class.
+[EXERCISE] Complete the `Calculator` class above by adding `int`methods `add`, `multiply`, `divide` and `modulus`. Then, create a client class to test the methods defined in the `Calculator` class.
 
 ### Classes with Methods and Data
 
-Classes can contain a mix of data (in the form of constants and variables) and methods, and these pieces can interact. Below, we expand the `TemperatureConversion` class from the previous section to include methods for performing conversions:
+Classes can contain a mix of data (in the form of constants and variables) and methods, and these pieces can interact. Below, we expand the `TemperatureConversion` class to include methods for performing conversions:
 
 <a name="exTempClass"></a>
 
@@ -441,7 +498,7 @@ class TemperatureConversion
 
 Classes like this generally do not have main methods; they instead provide a collection of constants, variables and methods to facilitate some tasks in other programs. The `TemperatureConversion` class above can be accessed by other classes in the same project.
 
-Create a new IntelliJ project, and in it create two new Java classes in the src folder. The first class should be the `TemperatureConversion` class above. The second should be the client class below. This client class defines a main method and uses (**calls**) a method defined in `TemperatureConversion`.
+Create a new IntelliJ project, and in it create two new Java classes in the `src` folder. The first class should be the `TemperatureConversion` class above. The second should be the client class below. This client class defines a main method and uses (**calls**) a method defined in `TemperatureConversion`.
 
 <a name="exClientClass"></a>
 
@@ -512,11 +569,11 @@ The class above has a few things we haven't discussed yet, so let's go through t
 
 Let's first look at the constant `nonsense`. `nonsense` is a `String[]` (i.e. an array of `String`s). We'll discuss arrays in more detail later; for now it is sufficient to understand that the array stores the four `String`s seen in its assignment, and that they are associated with (and can be accessed using) the integers `0`, `1`, `2`, and `3`.
 
-There is also an `import` statement, which imports the `Random` class from `java.util`. Instances of the `Random` class can be used to generated random primitive values.
+There is also an `import` statement, which imports the `Random` class from `java.util`. Instances of the `Random` class can be used to generate random primitive values.
 
-In the `hurlRandomNonsense` method, the instantiated `Random` object (called `generator`) is used to generate random integers. Specifically, it is used to generate random non-negative integers less than `nonsense.length`, i.e. less than `4` (the length of the `nonsense` array). That is, `generator` is used to generate random integers with values `0`, `1`, `2`, and `3`.
+In the `hurlRandomNonsense` method, the instantiated `Random` object (called `generator`) is used to generate a random `int`. Specifically, it is used to generate random non-negative `int` less than `nonsense.length`, i.e. less than `4` (the length of the `nonsense` array). That is, `generator` is used to generate a random `int` with value `0`, `1`, `2`, or `3`.
 
-These random integers are then used to access the corresponding `String` in the `nonsense` array, so it can be printed. The end result is: `hurlRandomNonsense` selects a random element from the `nonsense` array and prints it.
+The random `int` is then used to access the corresponding `String` in the `nonsense` array, so it can be printed. The end result is: `hurlRandomNonsense` selects a random element from the `nonsense` array and prints it.
 
 Note that `hurlRandomNonsense` is of type `void`; it does not `return` anything. In fact, it doesn't even have a `return` keyword, so its execution ends when it reaches the closing curly braces `}` denoting the end of the method body.
 
@@ -528,21 +585,21 @@ All of the methods we've defined so far have been `static`; these methods are as
 
 ### Methods vs Functions
 
-In most languages, there are both **methods** and **functions**. The two are similar; they are both essentially sequences of statements which may or may not reference input data to perform an action or set of actions or to output a result. The difference is that methods are associated with an object or class, whereas functions are standalone processes.
+In most languages, there are both **methods** and **functions**. The two are similar; they are both essentially sequences of statements which may or may not reference input data to perform an action or set of actions or to output a desired value. The difference is that methods are associated with an object or class, whereas functions are standalone processes.
 
-In Java, there is no such thing as a function; nothing can be defined outside of a class, so every definition is associated with either a class or with instances of that class.
+In Java, there is no such thing as a function; processes cannot be defined outside of a class, so every definition is associated with either a class or with instances of a class.
 
 ## Using IntelliJ's Debugger
 
 IntelliJ has a built-in debugger, which lets you step through your code line by line and check the values of variables and constants in the current scope.
 
-In the project consisting of the [`TemperatureConversion`](#exTempClass) class and its [`Client`](#exClientClass) class, set a **break point** on the line with the statement `double tempInCelcius = 100;`. You can set a break point on any line by clicking in between the editor pane's line numbers and the text editor itself. A red dot will appear on the line, denoting that there is a break point there:
+In the project consisting of the [`TemperatureConversion`](#exTempClass) class and its [client](#exClientClass) class, set a **break point** on the line with the statement `double tempInCelcius = 100;`. You can set a break point on any line by clicking in between the editor pane's line numbers and the text editor itself. A red dot will appear on the line, denoting that there is a break point there:
 
 ![Break Point](./figures/breakPoint.png)
 
 The break point tells the debugger **where to stop** to wait for your instruction; once you run the debugger, the program will run until it hits a break point, and then stop and wait. You can then use the debugger controls to move the program forward step by step.
 
-Once you've placed the break point, go to the `Run` menu, select `Debug...` and in the dialog that pops up select your `Client` class.
+Once you've placed the break point, go to the `Run` menu, select `Debug...` and in the dialog that pops up select your client class.
 
 The program should begin running, and stop at the break point. The break point will now be highlighted in blue, denoting where the debugger is stopped in its execution of the program:
 
@@ -570,7 +627,7 @@ There is a vertical toolbar on the left, outlined in red below. From top to bott
 
 ![Execution Toolbar](./figures/executionToolbar.png)
 
-In the variables pane, you can see a list of all variables which are accessinle from the scope of the current statement:
+In the variables pane, you can see a list of all variables which are accessible from the scope of the current statement:
 
 ![Debugger Variables](./figures/debuggerVariables.png)
 
@@ -583,7 +640,7 @@ Finally, the debugger controls can be used to follow the program through its exe
 * **Step Into**: Steps to the next line executed, in this file or a different file. If the current execution line calls a method defined in another file, the debugger will step into that method, so you can go through it line by line.
 * **Force Step Into**: A more inclusive "step into". Step into will not step into some library functions, where force step into will.
 * **Step Out**: Continue execution until leaving the current method / scope, then stop.
-* **Drop Frame**: Leaves the current method by returning to where it was called, essentially allowing you to step "back in time" to just before the method being executed was called. Use this carefully, as there are some changes that will not be reversed, and we won't discuss what these changes are until a future lab.
+* **Drop Frame**: Leave the current method by returning to where it was called, essentially allowing you to step "back in time" to just before the method being executed was called. Use this carefully, as changes made to non-local data (e.g. object references passed in as arguments) will not be reversed.
 * **Run To Cursor**: Continue execution until reaching the line where the cursor is.
 * **Expression Calculator**: Opens a window which allows you to type expressions (using variables in the current scope) and see what those expressions evaluate to.
 
@@ -597,15 +654,17 @@ Execution has now stopped just before the statement on line 7 in the picture abo
 
 Notice that line 7 contains a call to the method `TemperatureConversion.celcToFahren`. On this line, we are faced with a choice. If we hit the **Step Into**, we will step into the `celcToFahren` function, where we can go through it line by line. If we hit **Step Over** we will fully execute this call to `celcToFahren` without walking through it, and continue executing until reaching the next line in `Client.java`, which is line 9 in the image above.
 
+To clarify, in either case the `celcToFahren` method call will happen, but we will not go through it line-by-line if we step over it.
+
 Hit **Step Into**. You should end up here:
 
 ![Debugger Step Into 2](./figures/debuggerStepInto2.png)
 
-Note that the `tempInCelc` variable now in the variables pane is **not** the same one that we could see back in the `Client`. This is a new variable, an **argument** for the `celcToFahren` method, which has been given the value of the variable that was passed into the method in the `Client`.
+Note that the `tempInCelc` variable now visible in the variables pane is **not** the same one that we could see back in the client. This is a new variable, an **argument** for the `celcToFahren` method, which has been given a copy of the value of the variable that was passed into `celcToFahren` in the client.
 
-If you hit the **Drop Frame** button, you can step back into the `Client`, just before the `celcToFahren` was called. This is useful if you want to start the `celcToFahren` execution over to step through it again.
+If you hit the **Drop Frame** button, you can step back into the client, just before `celcToFahren` was called. This is useful if you want to start the `celcToFahren` execution over to step through it again.
 
-If you hit **Step Over**, **Step Into**, or **Step Out**, the result will be to finish the execution of the `celcToFahren` function (because we are already on its last line) and return to the `Client`, where execution will resume on the line after the method call. Hit one these three buttons, and you should end up here:
+If you hit **Step Over**, **Step Into**, or **Step Out**, the result will be to finish the execution of the `celcToFahren` function (because we are already on its last line) and return to the client, where execution will resume on the line after the method call. Hit one these three buttons, and you should end up here:
 
 ![Debugger Step Out](./figures/debuggerStepOut.png)
 
