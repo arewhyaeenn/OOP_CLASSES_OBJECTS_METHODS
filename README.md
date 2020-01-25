@@ -2,14 +2,14 @@
 
 In this lab:
 
-* How to `import` classes.
-* How to use the `Scanner` class to read input data.
+* `import`ing classes.
+* Using the `Scanner` class to read input data.
 * What is an object?
 * Objects vs primitives. Reference vs value.
 * What is a class?
-* Wrapper classes?
-* What methods are, and how to write `static` methods.
-* How to use the Debugger in IntelliJ.
+* Wrapper classes.
+* Methods, writing `static` methods.
+* Using IntelliJ's debugger.
 
 ## Importing
 
@@ -113,16 +113,24 @@ Radishes are the coolest vegetable : true
 Process finished with exit code 0
 ```
 
-[EXERCISE] Write a program which:
+<a name="q1"></a>**[EXERCISE 1](#a1)** Write a program which:
 
-* Prompts the user for two integer values `min` and `max` (check out the `Random` class in the `java.util` package).
-* Generates a random `int` called `secretNumber` between `min` and `max`, inclusive.
+1. Prompts the user for two integer values `minimum` and `maximum` (check out the `Random` class in the `java.util` package).
+2. Generates a random `int` called `secretNumber` from `minimum` to `maximum`, inclusive.
 * Prompts the user for a third `int`, called `guess`.
 * Tells the user:
 	* What the secret number was.
 	* How far off their guess was (use an absolute value, there is a method in the `Math` library for it).
 
+### <a name="a1"></a>**[EXERCISE 1](#q1)**
+#BOOKMARK
+```java
+
+```
+
 The `Scanner` can be used for inputs from files as well by replacing `System.in` with a `File` object. A `File` can be constructed using a `String` denoting the name of a file in the project directory of an IntelliJ project. The following program opens a file called `input.txt` in the project directory and prints every word in the file.
+
+<a name="fileClient"></a>
 
 ```java
 import java.io.File;
@@ -132,12 +140,17 @@ class FileClient
 {
     public static void main(String[] args) throws java.io.FileNotFoundException
     {
-        File inputFile = new File("input.txt");
+        File inputFile = new File("src/input.txt");
         Scanner inputFileScanner = new Scanner(inputFile);
 
-        while ( inputFileScanner.hasNext() )
+        String nextWord = "";
+
+        boolean keepLooping = inputFileScanner.hasNext();
+        while ( keepLooping )
         {
-            System.out.println(inputFileScanner.next());
+            nextWord = inputFileScanner.next();
+            System.out.println( nextWord );
+            keepLooping = inputFileScanner.hasNext();
         }
     }
 }
@@ -267,13 +280,37 @@ There are two `Point` objects `point_1` and `point_2` with the same coorinates. 
 
 [EXERCISE] Fix the program above to check if the two points have the same coordinates, not if they have the same address. You may find the [Point API](https://docs.oracle.com/javase/8/docs/api/java/awt/Point.html) useful.
 
+### `null`
+
+Objects can be given the value `null`. `null` is the reference equivalent of "no value".
+
+[EXERCISE] Debug the following program. What exception does it throw? What do you think the exception means?
+
+```java
+import java.util.Scanner;
+
+class NullClient
+{
+    public static void main(String[] args)
+    {
+        Scanner scan = null;
+
+        System.out.println("How many fingers do you have?");
+        
+        int userResponse = scan.nextInt();
+        
+        System.out.println("Who needs " + userResponse + " of anything, really...");
+    }
+}
+```
+
 ### `String`: Primitive or Object?
 
-Java `String`s are a blight inflicted on developers by James Gosling. `String`s are objects, technically, and in some contexts they behave like objects, but in other contexts they behave like primitives, but in some contexts treating them like primitives leads to issues and errors.
+Java `String`s are a blight inflicted on developers by James Gosling. In some contexts they behave like objects, but in other contexts they behave like primitives. In some contexts treating them like primitives leads to issues and errors, and in other contexts treating them like objects leads to issues and errors.
 
-`String`s are objects. If you always treat `String`s like objects, smooth sailing. Sometimes, if you treat them like primitives, nothing blows up. For instance, `String`s can be compared to eachother with the `==` operator like primitives, but only if they were created without the `new` keyword; if they were created as references (via object construction, using the `new` keyword) then the `==` operator will compare addresses instead of values like in the `ReferenceEquality` class above. Treating `String`'s like objects and using their `equals` method to check for equal values will always work, regardless of how the `String` was declared.
+`String`s can be compared to eachother with the `==` operator like primitives, but only if they were created without the `new` keyword; if they were created as references (via object construction, using the `new` keyword) then the `==` operator will compare addresses instead of values like in the `ReferenceEquality` class above. Treating `String`'s like objects and using their `equals` method to check for equal values will always work, regardless of how the `String` was declared.
 
-[EXERCISE] Predict the output of each snippet below. Then, run the snippet and test your prediction! 
+[EXERCISE] Predict outputs of the snippets below. Run them and test your predictions.
 
 ```java
 String s1 = "asdf";
@@ -317,7 +354,9 @@ String s2 = new String("asdf");
 System.out.println( s1.equals(s2) );
 ```
 
-The good news is that `String`s will always behave if you treat them like objects, even when they are not references.
+[EXERCISE] Write a program in which you try to set a `String` variable's value to `null`, an `int` variables value to `null`, and any object variable to `null`. Which ones work? Is the `String` behaving like an object or like a primitive? Shake your clenched fist at the sky and speculate about how James Gosling should be punished.
+
+[EXERCISE] `String`s can't be `null`. What `String` value might represent "no `String`"?
 
 ### Wrapper Classes
 
@@ -471,7 +510,7 @@ The `return` keywords means "leave the method" or "return to the line from which
 
 Classes can contain a mix of data (in the form of constants and variables) and methods, and these pieces can interact. Below, we expand the `TemperatureConversion` class to include methods for performing conversions:
 
-<a name="exTempClass"></a>
+<a name="temperatureConversion"></a>
 
 ```java
 class TemperatureConversion
@@ -593,7 +632,7 @@ In Java, there is no such thing as a function; processes cannot be defined outsi
 
 IntelliJ has a built-in debugger, which lets you step through your code line by line and check the values of variables and constants in the current scope.
 
-In the project consisting of the [`TemperatureConversion`](#exTempClass) class and its [client](#exClientClass) class, set a **break point** on the line with the statement `double tempInCelcius = 100;`. You can set a break point on any line by clicking in between the editor pane's line numbers and the text editor itself. A red dot will appear on the line, denoting that there is a break point there:
+In the project consisting of the [`TemperatureConversion`](#temperatureConversion) class and its [client](#exClientClass) class, set a **break point** on the line with the statement `double tempInCelcius = 100;`. You can set a break point on any line by clicking in between the editor pane's line numbers and the text editor itself. A red dot will appear on the line, denoting that there is a break point there:
 
 ![Break Point](./figures/breakPoint.png)
 
@@ -680,11 +719,26 @@ Many programmers are tempted to debug their software by printing status messages
 
 ## Lab Assignment
 
+Don't forget to document your work. Documentation should include descriptions of any classes and methods written, desciptions of any known issues, and sample runs.
+
 ### Task 1
 
 Write a program which prompts the user for `int` values and uses them to create three instances of the `Point` class from `java.awt`. Use the `Point` class's `distance` method to calculate the distances between the three points**\*\***. These three distances are the side lengths for a triangle. Calculate and print the perimeter and area of the triangle (check out [Heron's formula](https://en.wikipedia.org/wiki/Heron%27s_formula) for the area).
 
-**\*\*** Not all of the `Point` classes methods are listed on its [API](https://docs.oracle.com/javase/8/docs/api/java/awt/Point.html) directly. Some methods are **inherited** from other classes. These methods are listed in the API at the bottom of the *Method Summary* section, in subsections called **Methods inherited from \<some\_other\_class\>**. We're not going to go in depth on what inheritance is right now; we'll talk about it later in the semester. For now, know that any `Point` can use the methods it inherits from other classes, because it **is** an instance of those classes. The `Point` class inherits from the `java.awt.geom.Point2D` class, which means a `Point` is a `Point2D`, but with some extra stuff. So, a `Point` can do anything a `Point2D` can do, including using and being an argument for the `Point2D.distance` method. Click the `distance` methods in the **Methods inherited from class java.awt.geom.Point2D** section.
+**\*\*** Not all of the `Point` classes methods are listed on its [API](https://docs.oracle.com/javase/8/docs/api/java/awt/Point.html) directly. Some methods are **inherited** from other classes. These methods are listed in the API at the bottom of the *Method Summary* section, in subsections called **Methods inherited from \<some\_other\_class\>**. We're not going to go in depth on what inheritance is right now; we'll talk about it later in the semester. For now, know that any `Point` can use the methods it inherits from other classes, because it **is** an instance of those classes. The `Point` class inherits from the `java.awt.geom.Point2D` class, which means a `Point` is a `Point2D`, but with some extra stuff. So, a `Point` can do anything a `Point2D` can do, including using and being an argument for the `Point2D.distance` method. Click one of the `distance` methods in the **Methods inherited from class java.awt.geom.Point2D** section.
 
 ### Task 2
 
+Run the [`FileClient`](#fileClient) with the debugger (with a break point on the line with `while`).
+
+Expand the `inputFileScanner` variable in the debugger window to check out its stored data. How much of it can you make sense of?
+
+Watch the values of `keepLooping`, `nextWord` and `inputFileScanner`'s `buf` field in the debugger as you step through the loop multiple times.
+
+What do you think the `Scanner`'s `hasNext` method does?
+
+Theorize about what the `while` statement does. Try to create a different `while` statement which does something else.
+
+### Task 3
+
+Create a class like the [`TemperatureConversion`](#temperatureConversion) class, but for converting angles between degrees and radians. Creat a client class to test it.
