@@ -707,7 +707,44 @@ Now, the variable `tempInFahrenheit` is visible in the variables pane. It has be
 
 Many programmers are tempted to debug their software by printing status messages to the console stating the values of variables and other pertinent information. This is generally bad practice except in niche cases where the debugger isn't helpful for one reason or another. It's bad practice for a few reasons, but the primary one is that it is **tedious** and **slow**, whereas using the debugger is **easy** and **fast** once you're used to it!
 
-<a name="q14"></a>**EXERCISE 14** The `Euclid` class below defines a method called `gcd` which finds the [greatest common divisor](https://en.wikipedia.org/wiki/Greatest_common_divisor) of two non-negative `int`s `x` and `y` (or outputs `0`, if one of the inputs is negative). It contains some functionality that we haven't explored yet. But, we don't necessarily need to understand how it works internally in order to use it or test it; we just need to know what it claims to do and test that it does, well, that. Create a client class to test the `gcd` method.
+<a name="q14"></a>**EXERCISE 14** The `Euclid` class below defines a method called `gcd` which finds the [greatest common divisor](https://en.wikipedia.org/wiki/Greatest_common_divisor) of two non-negative `int`s `x` and `y` (or outputs `0`, if one of the inputs is negative). It contains some functionality that we haven't explored yet. But, we don't necessarily need to understand how it works in order to use it, as long as we know what its output is. Create a client class to test the `gcd` method.
+
+```java
+class Euclid
+{
+    static int gcd(int x, int y)
+    {
+        // if x is negative or y is negative
+        // i.e. if x is less than 0 or y is less than 0
+        if (x < 0 || y < 0)
+        {
+            // return 0, the inputs were invalid
+            return 0;
+        }
+
+        // if x is less than y
+        if (x < y)
+        {
+            // rerun the gcd function, but with the values switched
+            // so the bigger one is first.
+            // when a function calls itself, it's called a recursive call
+            return gcd(y, x);
+        }
+
+        // if y is 0
+        if (y == 0)
+        {
+            // return x, because...
+            // the gcd of 0 and x is x as long as x is positive
+            return x;
+        }
+
+        //
+        return gcd(y, x%y);
+    }
+}
+
+```
 
 <a name="q15"></a>**EXERCISE 15** Step through the `gcd` with the debugger, and see if you can figure out how it works!
 
