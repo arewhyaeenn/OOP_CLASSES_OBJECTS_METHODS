@@ -739,7 +739,7 @@ class Euclid
             return x;
         }
 
-        //
+        // return the gcd of y and the remainder of x/y
         return gcd(y, x%y);
     }
 }
