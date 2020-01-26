@@ -122,12 +122,6 @@ Process finished with exit code 0
 	* What the secret number was.
 	* How far off their guess was (use an absolute value, there is a method in the `Math` library for it).
 
-### <a name="a1"></a>**[EXERCISE 1](#q1)**
-#BOOKMARK
-```java
-
-```
-
 The `Scanner` can be used for inputs from files as well by replacing `System.in` with a `File` object. A `File` can be constructed using a `String` denoting the name of a file in the project directory of an IntelliJ project. The following program opens a file called `input.txt` in the project directory and prints every word in the file.
 
 <a name="fileClient"></a>
@@ -179,7 +173,7 @@ class FileClient
 }
 ```
 
-[EXERCISE] Modify the `Survey` class to read the responses to survey questions from a file instead of the console. You'll also need to create the file and type the responses into it.
+<a name="q2"></a>**EXERCISE 2** Modify the `Survey` class to read the responses to survey questions from a file instead of the console. You'll also need to create the file containing the input data.
 
 ## What is an Object?
 
@@ -237,9 +231,9 @@ class ReferenceDemo
 }
 ```
 
-[EXERCISE] Run the program above. Notice that in the output, the `origin` has moved to `(4,3)`. What goes wrong? Are all of the comments accurate?
+<a name="q3"></a>**[EXERCISE 3](#a3)** Run the program above. Notice that in the output, the `origin` has moved to `(4,3)`. What goes wrong? Are all of the comments accurate?
 
-[EXERCISE] Fix the program above.
+<a name="q4"></a>**EXERCISE 4** Fix the program above.
 
 ### Address Comparisons Example
 
@@ -278,13 +272,13 @@ Process finished with exit code 0
 
 There are two `Point` objects `point_1` and `point_2` with the same coorinates. `point_1 == point_2` evaluates to `false`. Why? Because objects are passed by reference! `point_1 == point_2` isn't comparing the **values** of the two `Point`s, it is comparing the **references** to those points. That is, the `==` operator is checking if the location of `point_1` in memory is the same as that of `point_2`. Two objects cannot be written in the same place, so these addresses can only be equal if the objects being compared are actually references to **the same object**. `point_1` and `point_2` do contain the same data, but they are two distinct points written at two distinct locations in memory, so their addresses are different.
 
-[EXERCISE] Fix the program above to check if the two points have the same coordinates, not if they have the same address. You may find the [Point API](https://docs.oracle.com/javase/8/docs/api/java/awt/Point.html) useful.
+<a name="q5"></a>**[EXERCISE 5](#a5)** Fix the program above to check if the two points have the same coordinates, not if they have the same address. You may find the [Point API](https://docs.oracle.com/javase/8/docs/api/java/awt/Point.html) useful.
 
 ### `null`
 
 Objects can be given the value `null`. `null` is the reference equivalent of "no value".
 
-[EXERCISE] Debug the following program. What exception does it throw? What do you think the exception means?
+<a name="q6"></a>**EXERCISE 6** Debug the following program. What exception does it throw? Which line statement is the exception thrown on? What do you think the exception means?
 
 ```java
 import java.util.Scanner;
@@ -310,7 +304,7 @@ Java `String`s are a blight inflicted on developers by James Gosling. In some co
 
 `String`s can be compared to eachother with the `==` operator like primitives, but only if they were created without the `new` keyword; if they were created as references (via object construction, using the `new` keyword) then the `==` operator will compare addresses instead of values like in the `ReferenceEquality` class above. Treating `String`'s like objects and using their `equals` method to check for equal values will always work, regardless of how the `String` was declared.
 
-[EXERCISE] Predict outputs of the snippets below. Run them and test your predictions.
+<a name="q7"></a>**EXERCISE 7** Predict outputs of the snippets below. Run them and test your predictions.
 
 ```java
 String s1 = "asdf";
@@ -354,21 +348,21 @@ String s2 = new String("asdf");
 System.out.println( s1.equals(s2) );
 ```
 
-[EXERCISE] Write a program in which you try to set a `String` variable's value to `null`, an `int` variables value to `null`, and any object variable to `null`. Which ones work? Is the `String` behaving like an object or like a primitive? Shake your clenched fist at the sky and speculate about how James Gosling should be punished.
+<a name="q8"></a>**EXERCISE 8** Write a program in which you try to set a `String` variable's value to `null`, a primitive variable's value to `null`, and any object variable to `null`. Which ones work? Is the `String` behaving like an object or like a primitive? Shake your clenched fist at the sky and speculate about how James Gosling should be punished.
 
-[EXERCISE] `String`s can't be `null`. What `String` value might represent "no `String`"?
+<a name="q9"></a>**[EXERCISE 9](#a9)** `String`s can't be `null`. What `String` value might represent "no `String`"?
 
 ### Wrapper Classes
 
 The `Integer` class compared with the `int` primitive [above](#valueVsReference) is one of the **wrapper classes**. Each primitive data type has a corresponding wrapper class. `char` has the `Character` class, `float` the `Float` class, and so on. In addition to being objects, these classes come with utilities in the form of useful methods. Find their documentation under the `java.lang` package in the [API](https://docs.oracle.com/javase/8/docs/api/). Wrapper classes do not need to be imported; `java.lang` is the core of the Java language, and is included in every project without importing.
 
-[EXERCISE] Write a program which prompts the user for a single character and then prints a `boolean` value denoting:
+<a name="q10"></a>**EXERCISE 10** Write a program which prompts the user for a single character and then prints a `boolean` value denoting:
 
 * whether the input character is in the english alphabet
 * whether the input character is a digit
 * the integer value of the character in unicode
 
-HINT: Use the `Character` wrapper class. The `Scanner` doesn't have a `nextChar` method, but we discussed [here](#nextChar) how to get the first character of an input with the `Scanner`.
+Use the `Character` wrapper class to determine whether the `char` is a digit or in the english alphabet. The `Scanner` doesn't have a `nextChar` method, but we discussed [here](#nextChar) how to get the first character of an input with the `Scanner`.
 
 ## What is a Class?
 
@@ -504,7 +498,7 @@ The body of the method above consists of a single statement: `return (operand_1 
 
 The `return` keywords means "leave the method" or "return to the line from which the method was called". If it is followed by an expression, then the value of that expression is the output or product of the method.
 
-[EXERCISE] Complete the `Calculator` class above by adding `int`methods `add`, `multiply`, `divide` and `modulus`. Then, create a client class to test the methods defined in the `Calculator` class.
+<a name="q11"></a>**EXERCISE 11** Complete the `Calculator` class above by adding `int`methods `add`, `multiply`, `divide` and `modulus`. Then, create a client class to test the methods defined in the `Calculator` class.
 
 ### Classes with Methods and Data
 
@@ -559,7 +553,7 @@ class TemperatureConversionClient
 
 If you run the client class above, it should use the `celcToFahren` method from the `TemperatureConversion` class to convert the Celcius temperature of `100` to the corresponding Fahrenheit (`212`) and print both temperatures.
 
-[EXERCISE] Complete the `TemperatureConversion` class above by filling out the `fahrenToCelc` method. Expand the client class above to test this new method.
+<a name="q12"></a>**EXERCISE 12** Complete the `TemperatureConversion` class above by filling out the `fahrenToCelc` method. Expand the client class above to test this new method.
 
 ### `void` Methods
 
@@ -616,7 +610,7 @@ The random `int` is then used to access the corresponding `String` in the `nonse
 
 Note that `hurlRandomNonsense` is of type `void`; it does not `return` anything. In fact, it doesn't even have a `return` keyword, so its execution ends when it reaches the closing curly braces `}` denoting the end of the method body.
 
-[EXERCISE] Create a client class to test the `StringSlinger` class's `hurlRandomNonsense` method.
+<a name="q13"></a>**EXERCISE 13** Create a client class to test the `StringSlinger` class's `hurlRandomNonsense` method.
 
 ### Class Methods vs Instance Methods
 
@@ -713,13 +707,70 @@ Now, the variable `tempInFahrenheit` is visible in the variables pane. It has be
 
 Many programmers are tempted to debug their software by printing status messages to the console stating the values of variables and other pertinent information. This is generally bad practice except in niche cases where the debugger isn't helpful for one reason or another. It's bad practice for a few reasons, but the primary one is that it is **tedious** and **slow**, whereas using the debugger is **easy** and **fast** once you're used to it!
 
-[EXERCISE] The `Euclid` class below defines a method called `gcd` which finds the [greatest common divisor](https://en.wikipedia.org/wiki/Greatest_common_divisor) of two non-negative `int`s `x` and `y` (or outputs `0`, if one of the inputs is negative). It contains some functionality that we haven't explored yet. But, we don't necessarily need to understand how it works internally in order to use it or test it; we just need to know what it claims to do and test that it does, well, that. Create a client class to test the `gcd` method.
+<a name="q14"></a>**EXERCISE 14** The `Euclid` class below defines a method called `gcd` which finds the [greatest common divisor](https://en.wikipedia.org/wiki/Greatest_common_divisor) of two non-negative `int`s `x` and `y` (or outputs `0`, if one of the inputs is negative). It contains some functionality that we haven't explored yet. But, we don't necessarily need to understand how it works internally in order to use it or test it; we just need to know what it claims to do and test that it does, well, that. Create a client class to test the `gcd` method.
 
-[EXERCISE] Step through the `gcd` with the debugger, and see if you can figure out how it works!
+<a name="q15"></a>**EXERCISE 15** Step through the `gcd` with the debugger, and see if you can figure out how it works!
+
+## Answers to Selected Exercises
+
+### <a name="a1"></a>**[EXERCISE 1](#q1)**
+
+The program below uses an `if`/`else` statement, which we haven't covered yet. How do you think it works?
+
+```java
+import java.util.Scanner;
+import java.util.Random;
+
+class GuessingGame
+{
+    public static void main(String[] args)
+    {
+        Scanner keyboard = new Scanner( System.in );
+        Random generator = new Random();
+
+        System.out.print("Enter the minimum : ");
+        int minimum = keyboard.nextInt();
+
+        System.out.print("\nEnter the maximum : ");
+        int maximum = keyboard.nextInt();
+
+        int secretNumber = generator.nextInt(maximum - minimum + 1) + minimum;
+
+        System.out.print("\nGuess a number from " + minimum + " to " + maximum + " : ");
+        int userGuess = keyboard.nextInt();
+
+        int error = Math.abs(userGuess - secretNumber);
+
+        if (error == 0)
+        {
+            System.out.println("\nExcellent Guess!");
+        }
+        else
+        {
+            System.out.println("\nOoh, sorry, the correct answer was " + secretNumber + ".");
+            System.out.println("You were " + error + " away.");
+        }
+    }
+}
+```
+
+### <a name="a3"></a>**[EXERCISE 3](#q3)**
+
+The two `Point` variables, `origin` and `otherPoint`, both reference the same `Point` object because `otherPoint` is initialized with `Point otherPoint = origin;` and then never reassigned. The comment above this line isn't accurate; no second `Point` is created, a second reference is made to a pre-existing `Point`.
+
+### <a name="a5"></a>**[EXERCISE 5](#q5)**
+
+Replace `point_1 == point_2` with `point_1.equals(point_2)`, so use the `Point` class's definition of equality (equal coordinates) instead of the generic object definition of equality (equal addresses).
+
+### <a name="q9"></a>**[EXERCISE 9](#a9)**
+
+The closest value the Java `String` has to `null` is the **empty string**, whose literal is `""` (i.e. `String myEmptyString = "";`).
 
 ## Lab Assignment
 
 Don't forget to document your work. Documentation should include descriptions of any classes and methods written, desciptions of any known issues, and sample runs.
+
+Your submission should consist of one or more IntelliJ projects zipped up with the documentation.
 
 ### Task 1
 
