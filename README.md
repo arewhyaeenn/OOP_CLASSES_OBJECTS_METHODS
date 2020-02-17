@@ -354,7 +354,7 @@ System.out.println( s1.equals(s2) );
 
 The `Integer` class compared with the `int` primitive [above](#valueVsReference) is one of the **wrapper classes**. Each primitive data type has a corresponding wrapper class. `char` has the `Character` class, `float` the `Float` class, and so on. In addition to being objects, these classes come with utilities in the form of useful methods. Find their documentation under the `java.lang` package in the [API](https://docs.oracle.com/javase/8/docs/api/). Wrapper classes do not need to be imported; `java.lang` is the core of the Java language, and is included in every project without importing.
 
-<a name="q10"></a>**EXERCISE 10** Write a program which prompts the user for a single character and then prints a `boolean` value denoting:
+<a name="q10"></a>**EXERCISE 10** Write a program which prompts the user for a single character and then prints `boolean` values denoting:
 
 * whether the input character is in the english alphabet
 * whether the input character is a digit
