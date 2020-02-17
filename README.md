@@ -445,7 +445,7 @@ As mentioned in the previous section, a **method** is essentially a sequence of 
 class <identifier> { <body }
 ```
 
-(althought for readability's sake we usually write them like this:
+Though for readability's sake we usually write them like this:
 
 ```java
 class <identifier>
