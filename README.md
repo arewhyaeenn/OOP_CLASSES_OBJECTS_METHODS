@@ -456,7 +456,7 @@ class <identifier>
 }
 ```
 
-Something is said to be in the **scope** of the class body if it is in the curly braces `{}` denoting the boundaries of the class body. Specifically, `static` method declarations appear in the class body but not inside any nested blocks.
+Something is said to be in the **scope** of the class body if it is in the curly braces `{}` denoting the boundaries of the class body. `static` method declarations appear in the class body but not inside any nested blocks.
 
 The simplest `static` method definitions look like this:
 
