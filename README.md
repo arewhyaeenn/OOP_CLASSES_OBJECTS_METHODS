@@ -25,8 +25,6 @@ An example can be found in the previous lab, where we imported the `Scanner` cla
 import java.util.Scanner;
 ```
 
-Here, the `Scanner` is a class from the `util` subpackage of the `java` package.
-
 Note that the class name `Scanner` is in `PascalCase` while the package and subpackage names `java` and `util` are in `camelCase`. This is a standard across most Java packages.
 
 ## The `Scanner` Class
