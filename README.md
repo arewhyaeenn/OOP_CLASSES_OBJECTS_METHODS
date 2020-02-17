@@ -231,7 +231,7 @@ class ReferenceDemo
 
 <a name="q3"></a>**[EXERCISE 3](#a3)** Run the program above. Notice that in the output, the `origin` has moved to `(4,3)`. What goes wrong? Are all of the comments accurate?
 
-<a name="q4"></a>**EXERCISE 4** Fix the program above.
+<a name="q4"></a>**EXERCISE 4** Fix the program above. That is, modify it so that when `otherPoint` is moved, `origin` does not move with it.
 
 ### Address Comparisons Example
 
