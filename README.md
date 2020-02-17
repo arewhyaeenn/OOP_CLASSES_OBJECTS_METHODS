@@ -118,7 +118,7 @@ Process finished with exit code 0
 * Prompts the user for a third `int`, called `guess`.
 * Tells the user:
 	* What the secret number was.
-	* How far off their guess was (use an absolute value, there is a method in the `Math` library for it).
+	* How far off their guess was (use an absolute value, there is a method in the `Math` class for it).
 
 The `Scanner` can be used for inputs from files as well by replacing `System.in` with a `File` object. A `File` can be constructed using a `String` denoting the name of a file in the project directory of an IntelliJ project. The following program opens a file called `input.txt` in the project directory and prints every word in the file.
 
