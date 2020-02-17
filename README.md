@@ -113,8 +113,8 @@ Process finished with exit code 0
 
 <a name="q1"></a>**[EXERCISE 1](#a1)** Write a program which:
 
-1. Prompts the user for two integer values `minimum` and `maximum` (check out the `Random` class in the `java.util` package).
-2. Generates a random `int` called `secretNumber` from `minimum` to `maximum`, inclusive.
+1. Prompts the user for two integer values `minimum` and `maximum`.
+2. Generates a random `int` called `secretNumber` from `minimum` to `maximum`, inclusive (check out the `Random` class in the `java.util` package).
 * Prompts the user for a third `int`, called `guess`.
 * Tells the user:
 	* What the secret number was.
