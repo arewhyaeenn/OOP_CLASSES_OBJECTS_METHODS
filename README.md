@@ -496,7 +496,7 @@ that:
 
 The body of the method above consists of a single statement: `return (operand_1 - operand_2);`
 
-The `return` keywords means "leave the method" or "return to the line from which the method was called". If it is followed by an expression, then the value of that expression is the output or product of the method.
+The `return` keywords means "leave the method" or "return to the line from which the method was called". If it is followed by an expression, then the value of that expression is the output or result of the method.
 
 <a name="q11"></a>**EXERCISE 11** Complete the `Calculator` class above by adding `int`methods `add`, `multiply`, `divide` and `modulus`. Then, create a client class to test the methods defined in the `Calculator` class.
 
