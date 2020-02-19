@@ -851,3 +851,9 @@ This will require a loop, and the `String`'s `charAt` method.
 
 You may also want to check out the [`StringBuilder`](https://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html), because repeatedly adding to `String`'s using concatenation is bad practice (it requires reallocation of memory for the entire `String` on each addition).
 
+### Task 7
+
+Create a class with a method called `makeChange`. The method should take as an argument an integer, specifying a number of cents, and should return an array containing four integers denoting the number of quarters, dimes, nickels and pennies necessary to make the requested amount of change.
+
+Write a client class to test your `makeChange` method.
+
