@@ -830,3 +830,24 @@ Theorize about what the `while` statement does. Try to create a different `while
 ### Task 3
 
 Create a class like the [`TemperatureConversion`](#temperatureConversion) class, but for converting angles between degrees and radians. Creat a client class to test it.
+
+## Bonus Tasks
+
+### Task 4
+
+Expand your program from Task 1 to also print the angles in the triangle, in both degrees and radians. You might find the [law of cosines](https://en.wikipedia.org/wiki/Law_of_cosines) useful.
+
+### Task 5
+
+Write a class containing a method which finds takes as an argument an integer and finds the corresponding [fibonacci number](https://en.wikipedia.org/wiki/Fibonacci_number). This will require either a loop or [recursion](https://en.wikipedia.org/wiki/Recursion).
+
+Create a client class to test this method.
+
+### Task 6
+
+Create a class containing a method called `reverseString` which takes as input a `String` and returns that same `String`, backwards.
+
+This will require a loop, and the `String`'s `charAt` method.
+
+You may also want to check out the [`StringBuilder`](https://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html), because repeatedly adding to `String`'s using concatenation is bad practice (it requires reallocation of memory for the entire `String` on each addition).
+
