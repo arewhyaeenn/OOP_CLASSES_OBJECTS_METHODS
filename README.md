@@ -857,3 +857,5 @@ Create a class with a method called `makeChange`. The method should take as an a
 
 Write a client class to test your `makeChange` method.
 
+We haven't talked about arrays yet, so you'll need to do some research on how to create them and give them values.
+
