@@ -276,7 +276,7 @@ There are two `Point` objects `point_1` and `point_2` with the same coorinates. 
 
 Objects can be given the value `null`. `null` is the reference equivalent of "no value".
 
-<a name="q6"></a>**EXERCISE 6** Debug the following program. What exception does it throw? Which line is the exception thrown on? What do you think the exception means?
+<a name="q6"></a>**EXERCISE 6** Run the following program. What exception does it throw? Which line is the exception thrown on? What do you think the exception means? How might you fix it?
 
 ```java
 import java.util.Scanner;
