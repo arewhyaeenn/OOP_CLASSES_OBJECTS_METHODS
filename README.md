@@ -817,7 +817,7 @@ Write a program which prompts the user for `int` values and uses them to create 
 
 ### Task 2
 
-Run the [`FileClient`](#fileClient) with the debugger (with a break point on the line with `while`).
+Run the [`FileClient`](#fileClient) with the debugger (with a break point on the line with `while`). You'll need to create a file called input.txt in the src folder (which the program will open) and add some (any) contents to it.
 
 Expand the `inputFileScanner` variable in the debugger window to check out its stored data. How much of it can you make sense of?
 
