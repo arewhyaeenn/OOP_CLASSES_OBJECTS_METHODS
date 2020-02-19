@@ -869,5 +869,9 @@ Write a program which asks the user for their birthday, and then prints the numb
 
 You do not need to ask the user for the current date and time, nor do you need to do any of the calculations by hand; find a class for storing and manipulating date-time data in Java and use it.
 
+### Task 9 
 
+Write a program which prompts the user for a date, and tells them what day of the week that date falls on by using the trick described [here](https://cs.uwaterloo.ca/~alopez-o/math-faq/node73.html).
+
+Then, write a second program which instead uses an imported class to perform the same task.
 
