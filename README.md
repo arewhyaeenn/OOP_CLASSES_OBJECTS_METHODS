@@ -823,9 +823,13 @@ Expand the `inputFileScanner` variable in the debugger window to check out its s
 
 Watch the values of `keepLooping`, `nextWord` and `inputFileScanner`'s `buf` field in the debugger as you step through the loop multiple times.
 
-What do you think the `Scanner`'s `hasNext` method does?
+In your documentation, address the following:
 
-Theorize about what the `while` statement does. Try to create a different `while` statement which does something else.
+* What do you think the `Scanner`'s `hasNext` method does?
+
+* Theorize about what the `while` statement does.
+
+Try to create a different `while` statement which does something else.
 
 ### Task 3
 
@@ -864,4 +868,6 @@ We haven't talked about arrays yet, so you'll need to do some research on how to
 Write a program which asks the user for their birthday, and then prints the number of years, days, hours, minutes, and seconds until midnight at the start of their birthday.
 
 You do not need to ask the user for the current date and time, nor do you need to do any of the calculations by hand; find a class for storing and manipulating date-time data in Java and use it.
+
+
 
