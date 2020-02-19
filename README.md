@@ -801,7 +801,7 @@ Replace `point_1 == point_2` with `point_1.equals(point_2)`, so use the `Point` 
 
 ### <a name="q9"></a>**[EXERCISE 9](#a9)**
 
-The closest value the Java `String` has to `null` is the **empty string**, whose literal is `""` (i.e. `String myEmptyString = "";`).
+The `String` equivalent of `0` is the **empty string**, whose literal is `""` (i.e. `String myEmptyString = "";`). It is a `String` containing no characters.
 
 ## Lab Assignment
 
