@@ -875,3 +875,4 @@ Write a program which prompts the user for a date, and tells them what day of th
 
 Then, write a second program which instead uses an imported class to perform the same task.
 
+In your documentation, reflect on your implementations. Which is easier to implement, once you're familiar with all of the classes being used?
