@@ -348,7 +348,7 @@ System.out.println( s1.equals(s2) );
 
 <a name="q8"></a>**EXERCISE 8** Write a program in which you try to set a `String` variable's value to `null`, a primitive variable's value to `null`, and any object variable to `null`. Which ones work? Is the `String` behaving like an object or like a primitive? Shake your clenched fist at the sky and speculate about how James Gosling should be punished.
 
-<a name="q9"></a>**[EXERCISE 9](#a9)** `String`s can't be `null`. What `String` value might represent "no `String`"?
+<a name="q9"></a>**[EXERCISE 9](#a9)** `String`s can be `null`, but there is another `String` literal that is often used to represent the `String` equivalent of `0`. What `String` value do you think this would be?
 
 ### Wrapper Classes
 
