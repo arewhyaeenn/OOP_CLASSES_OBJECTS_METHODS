@@ -857,5 +857,11 @@ Create a class with a method called `makeChange`. The method should take as an a
 
 Write a client class to test your `makeChange` method.
 
-We haven't talked about arrays yet, so you'll need to do some research on how to create them and give them values.
+We haven't talked about arrays yet, so you'll need to do some research on how to create them, give them values, and access and modify those values.
+
+### Task 8
+
+Write a program which asks the user for their birthday, and then prints the number of years, days, hours, minutes, and seconds until midnight at the start of their birthday.
+
+You do not need to ask the user for the current date and time, nor do you need to do any of the calculations by hand; find a class for storing and manipulating date-time data in Java and use it.
 
