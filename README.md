@@ -843,7 +843,7 @@ Expand your program from Task 1 to also print the angles in the triangle, in bot
 
 ### Task 5
 
-Write a class containing a method which finds takes as an argument an integer and finds the corresponding [fibonacci number](https://en.wikipedia.org/wiki/Fibonacci_number). This will require either a loop or [recursion](https://en.wikipedia.org/wiki/Recursion).
+Write a class containing a method which takes as an argument (i.e input) an integer and finds the corresponding [fibonacci number](https://en.wikipedia.org/wiki/Fibonacci_number). This will require either a loop or [recursion](https://en.wikipedia.org/wiki/Recursion).
 
 Create a client class to test this method.
 
