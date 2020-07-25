@@ -15,7 +15,7 @@ In this lab:
 
 **packages** contain organized sets of classes, generally with some unifying purpose. They can also contain smaller packages, known as **subpackages**.
 
-If you check the [Java 8 API](https://docs.oracle.com/javase/8/docs/api/), you can see a list of packages available in the Java 8 Standard Edition platform (these are the packages that are available in your Java Development Kit you installed in week 1).
+If you check the [Java 8 API](https://docs.oracle.com/javase/8/docs/api/), you can see a list of packages available in the Java 8 Standard Edition platform (these are the packages that are available in the Java Development Kit installed on your cloud server or your home computer, depending on your IDE).
 
 Classes can be imported using `import` statements, which are generally at the top of the program outside of the class definition. `import` statments consist of the `import` keyword followed by the name of the package being imported, a `.` (accessor operator) to access a member of that package, and then the class name (the package member being accessed). They look like this: `import <package>.<class>;`.
 
@@ -25,15 +25,15 @@ An example can be found in the previous lab, where we imported the `Scanner` cla
 import java.util.Scanner;
 ```
 
-Note that the class name `Scanner` is in `PascalCase` while the package and subpackage names `java` and `util` are in `camelCase`. This is a standard across most Java packages.
+Note that the class name `Scanner` is in `PascalCase` while the package and subpackage names `java` and `util` are in `camelCase`. This is a standard across Java packages.
 
 ## The `Scanner` Class
 
-We used the `Scanner` class briefly in the previous lab, so you might be familiar with it already. It can be used to parse primitive data from an input source. The input source might be a text file, a `String`, or an `InputStream`. For now, we don't need to know what an `InputStream` is, we just need to know that there is one called `System.in` which corresponds to input typed in the console, so if we use that `InputStream` as a source, the `Scanner` can be used to get input from the console and parse it.
+We used the `Scanner` class briefly in the previous lab, so you might be familiar with it already. It can be used to parse primitive data from an input source. The input source might be a text file, a `String`, or an `InputStream`. For now, we don't need to know what an `InputStream` is, exactly, we just need to know that there is one called `System.in` which corresponds to input typed in the console, so if we use that `InputStream` as a source, the `Scanner` can be used to get input from the console and parse it.
 
 In order to use a `Scanner`, we must **construct** it. The `Scanner` class is essentially a blueprint, which can be used to construct `Scanner` objects associated with specific input sources. The constructed `Scanner` object is said to be an **instance** of the `Scanner` class.
 
-Object construction is done with a method called a **constructor**, which provides instructions detailing how to set up the object. A class's constructor is run with the `new` keyword, followed by the name of the class, and the parenthesis containing any **arguments** (i.e. inputs) for the constructor. The resulting object is usually then stored in a variable, so the constructor call is usually the right side of an assignment statement. For example, the statement below constructs a new `Scanner` object called `keyboard`:
+Object construction is done with a method called a **constructor**, which provides instructions detailing how to set up the object. A class's constructor is run with the `new` keyword, followed by the name of the class, and the parenthesis containing any **arguments** (i.e. inputs) for the constructor. The resulting object is usually then referenced by a variable, so the constructor call is usually the right side of an assignment statement. For example, the statement below constructs a new `Scanner` object called `keyboard`:
 
 ```java
 Scanner keyboard = new Scanner( System.in );
@@ -79,10 +79,10 @@ class Survey
 
 In the program above, a `Scanner` with identifier `scan` is created, and is then used to read user's responses from the console after questions are printed to the console.
 
-Note that there is an extra call to the `nextLine` method before the second question. This is due to an oddity of how the `Scanner` interacts with its input source.
-
 <a name="nextChar"></a>
 The `Scanner` reads characters from the input source one at a time and parses them into the desired data types (if possible). It has methods to read most of the primitive data types, named accordingly; `nextInt` reads an `int`, `nextDouble` reads a `double` and so on... It does not have a `nextChar` method; this is generally done with `next().charAt(0)`, which reads the next word and then picks out the first character of that word. It also has methods to read different types of `String` data from its input stream; among these are `next`, which reads the next "word" (i.e. all characters up to the next white space), and `nextLine`, which reads all characters up through the next newline character (`'\n'`).
+
+Note that there is an extra call to the `nextLine` method before the second question. This is due to an oddity of how the `Scanner` interacts with its input source:
 
 When a `Scanner` calls a method to read a primitive or the `next` method to read a word, it leaves the newline at the start of the input. This will cause the next `newLine` call to be blank; it reads until the first newline, and the first character in the stream is a newline. So, that extra call to the `nextLine` method before the second question in the program above is to read this residual newline character out of the input stream, which in turn allows the following `nextLine` call to get the user's input instead of a blank line.
 
@@ -114,13 +114,20 @@ Process finished with exit code 0
 <a name="q1"></a>**[EXERCISE 1](#a1)** Write a program which:
 
 1. Prompts the user for two integer values `minimum` and `maximum`.
-2. Generates a random `int` called `secretNumber` from `minimum` to `maximum`, inclusive (check out the `Random` class in the `java.util` package).
+2. Generates a random `int` called `secretNumber` from `minimum` to `maximum`, inclusive.
+	* Check out the [`Random`](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) class in the `java.util` package.
+	* You could find the documentation linked above very easily by googling "Java 8 Random).
+	* You'll need to
+		* Import the class
+		* Construct an instance of it (something like `Random generator = new Random();`)
+		* Use an appropriate method from the class to generate a random integer from `minimum` to `maximum`.
+	* There are several different ways you could go about this; read through the documentation's method summary and see if you can find something that you can use to accomplish the task at hand.
 * Prompts the user for a third `int`, called `guess`.
 * Tells the user:
 	* What the secret number was.
 	* How far off their guess was (use an absolute value, there is a method in the `Math` class for it).
 
-The `Scanner` can be used for inputs from files as well by replacing `System.in` with a `File` object. A `File` can be constructed using a `String` denoting the name of a file in the project directory of an IntelliJ project. The following program opens a file called `input.txt` in the project directory and prints every word in the file.
+The `Scanner` can be used for inputs from files as well by replacing `System.in` with a `File` object. A `File` can be constructed using a `String` denoting the path from the working directory (i.e. wherever "java" was called) to a file. The following program opens a file called `input.txt` in the working directory and prints every word in the file.
 
 <a name="fileClient"></a>
 
@@ -132,7 +139,7 @@ class FileClient
 {
     public static void main(String[] args) throws java.io.FileNotFoundException
     {
-        File inputFile = new File("src/input.txt");
+        File inputFile = new File("input.txt");
         Scanner inputFileScanner = new Scanner(inputFile);
 
         String nextWord = "";
@@ -148,9 +155,9 @@ class FileClient
 }
 ```
 
-The program above uses a `while` loop, which we'll discuss in the next lab, but you might be able to figure out how it works. `Exception`s will be covered later on, but for now, an `Exception` is data about an error stored in an object. `throw`ing an `Exception` terminates the program (usually with an error message stating what error occured).
+The program above uses a `while` loop, which we'll discuss in the next lab, but you might be able to figure out how it works. `Exception`s will be covered later on, but for now, an `Exception` is and object containing data about an error. Throwing an exception terminates the program (usually with an error message stating what error occured), unless you make additions which "catch" the error and decide what to do about it.
 
-You can provide a path from the project folder to a file in the `File` object constructor to open files in other locations. The program below requires that `input.txt` is in the `src` folder.
+You can provide a path from the project folder to a file in the `File` object constructor to open files in other locations. The program below requires that `input.txt` is in the `src` folder, which must be in the working directory. The `while` loop has also been written more concisely, but it functions the same.
 
 ```java
 import java.io.File;
@@ -177,9 +184,9 @@ class FileClient
 
 ### <a name="valueVsReference"></a> Value vs Reference
 
-The primary difference between object data and primitive data is that primive data is **passed by value** whereas object data is **passed by reference**. A reference is an address in memory; it encodes a location. In the case of an object reference, the memory address points to the location at which the object's data is stored.
+The most notable difference between object data and primitive data is that primitive data is **passed by value** whereas object data is **passed by reference**. A reference is an address in memory; it encodes a location. In the case of an object reference, the memory address points to the location at which the object's data is stored.
 
-The `Integer` class constructs `Integer` objects, which are essentially the object equivalent of the `int` primitive. The `Integer` class is one of the **wrapper classes**, which we'll talk more about soon. In the picture below, the `x`'s value is simply the `int` value `1`. `y`'s value is **Ox3A28213A**, which is an address (or location) in memory, where the `Integer` object referenced by `y` is located. The key takeaway here is that `x`'s value is the integer value itself, whereas `y`'s value is an address, denoting where the integer value is stored.
+The `Integer` class constructs `Integer` objects, which are essentially the object equivalent of `int` primitives. The `Integer` class is one of the **wrapper classes**, which we'll talk more about soon. In the picture below, the `x`'s value is simply the `int` value `1`. `y`'s value is **Ox3A28213A**, which is an address (or location) in memory, where the `Integer` object referenced by `y` is located. The key takeaway here is that `x`'s value is the integer value itself, whereas `y`'s value is an address, denoting where the integer value is stored.
 
 ![Value vs Reference](./figures/value_vs_reference.png)
 
@@ -195,7 +202,7 @@ Compare the picture above to the one below.
 
 ![Objects Different Address](./figures/objects_different_address.png)
 
-These "references" are often referred to as "pointers". Java does basically all of reference work under the hood, but it is helpful to understand the difference between reference and value. If you want to learn more about pointers, check out [this sophomore level lab](https://github.com/arewhyaeenn/COMP_232_LAB_1_2_C_TUTORIAL).
+These "references" are often referred to as "pointers". Java does basically all of reference work under the hood, but it is helpful to understand the difference between reference and value.
 
 ### Shared Reference Example
 
@@ -231,9 +238,11 @@ class ReferenceDemo
 
 <a name="q3"></a>**[EXERCISE 3](#a3)** Run the program above. Notice that in the output, the `origin` has moved to `(4,3)`. What goes wrong? Are all of the comments accurate?
 
-<a name="q4"></a>**EXERCISE 4** Fix the program above. That is, modify it so that when `otherPoint` is moved, `origin` does not move with it.
+<a name="q4"></a>**[EXERCISE 4](#a4)** Fix the program above. That is, modify it so that when `otherPoint` is moved, `origin` does not move with it.
 
 ### Address Comparisons Example
+
+Consider the following class:
 
 ```java
 import java.awt.Point;
@@ -260,7 +269,7 @@ class ReferenceEquality
 }
 ```
 
-If you run the program above, you will get the following output:
+If you compile and run the class above, you will get the following output:
 
 ```
 java.awt.Point[x=0,y=0] equals java.awt.Point[x=0,y=0] : false
@@ -268,15 +277,15 @@ java.awt.Point[x=0,y=0] equals java.awt.Point[x=0,y=0] : false
 Process finished with exit code 0
 ```
 
-There are two `Point` objects `point_1` and `point_2` with the same coorinates. `point_1 == point_2` evaluates to `false`. Why? Because objects are passed by reference! `point_1 == point_2` isn't comparing the **values** of the two `Point`s, it is comparing the **references** to those points. That is, the `==` operator is checking if the location of `point_1` in memory is the same as that of `point_2`. Two objects cannot be written in the same place, so these addresses can only be equal if the objects being compared are actually references to **the same object**. `point_1` and `point_2` do contain the same data, but they are two distinct points written at two distinct locations in memory, so their addresses are different.
+There are two `Point` objects `point_1` and `point_2` with the same coorinates. `point_1 == point_2` evaluates to `false`. Why? Because objects are passed by reference! `point_1 == point_2` isn't comparing the **values** of the two points, it is comparing the **references** to those points. That is, the `==` operator is checking if the address stored in `point_1` is the same as that stored `point_2`, or identically if the two referenced objects are at the same location in memory. Two objects cannot occupy the same space, so these addresses can only be equal if the objects being compared are actually references to **the same object**. `point_1` and `point_2` do reference objects containing identical data, but they are two distinct points written at two distinct locations in memory, so their addresses are different.
 
-<a name="q5"></a>**[EXERCISE 5](#a5)** Fix the program above to check if the two points have the same coordinates, not if they have the same address. You may find the [Point API](https://docs.oracle.com/javase/8/docs/api/java/awt/Point.html) useful.
+<a name="q5"></a>**[EXERCISE 5](#a5)** Fix the program above to check if the two points have the same coordinates, not if they have the same address. Hint: search the [Point API](https://docs.oracle.com/javase/8/docs/api/java/awt/Point.html) for a suitable method.
 
 ### `null`
 
-Objects can be given the value `null`. `null` is the reference equivalent of "no value".
+Objects can be given the value `null`. `null` is the reference equivalent of "no value". Primitives cannot be set to `null`.
 
-<a name="q6"></a>**EXERCISE 6** Run the following program. What exception does it throw? Which line is the exception thrown on? What do you think the exception means? How might you fix it?
+<a name="q6"></a>**[EXERCISE 6](#a6)** Run the following program. What exception does it throw? Which line is the exception thrown on? What do you think the exception means? How might you fix it?
 
 ```java
 import java.util.Scanner;
@@ -302,7 +311,7 @@ Java `String`s are a blight inflicted on developers by James Gosling. In some co
 
 `String`s can be compared to eachother with the `==` operator like primitives, but only if they were created without the `new` keyword; if they were created as references (via object construction, using the `new` keyword) then the `==` operator will compare addresses instead of values like in the `ReferenceEquality` class above. Treating `String`'s like objects and using their `equals` method to check for equal values will always work, regardless of how the `String` was declared.
 
-<a name="q7"></a>**EXERCISE 7** Predict outputs of the snippets below. Run them and test your predictions.
+<a name="q7"></a>**EXERCISE 7** Predict outputs of the snippets below. Run them and test your predictions. Then, shake your clenched fist at the sky and speculate about how James Gosling should be punished.
 
 ```java
 String s1 = "asdf";
@@ -346,24 +355,24 @@ String s2 = new String("asdf");
 System.out.println( s1.equals(s2) );
 ```
 
-<a name="q8"></a>**EXERCISE 8** Write a program in which you try to set a `String` variable's value to `null`, a primitive variable's value to `null`, and any object variable to `null`. Which ones work? Is the `String` behaving like an object or like a primitive? Shake your clenched fist at the sky and speculate about how James Gosling should be punished.
+<a name="q8"></a>**EXERCISE 8** Write a program in which you try to set a `String` variable's value to `null`, a primitive variable's value to `null`, and any object variable to `null`. Which ones work? Is the `String` behaving like an object or like a primitive?
 
 <a name="q9"></a>**[EXERCISE 9](#a9)** `String`s can be `null`, but there is another `String` literal that is often used to represent the `String` equivalent of `0`. What `String` value do you think this would be?
 
 ### Wrapper Classes
 
-The `Integer` class compared with the `int` primitive [above](#valueVsReference) is one of the **wrapper classes**. Each primitive data type has a corresponding wrapper class. `char` has the `Character` class, `float` the `Float` class, and so on. In addition to being objects, these classes come with utilities in the form of useful methods. Find their documentation under the `java.lang` package in the [API](https://docs.oracle.com/javase/8/docs/api/). Wrapper classes do not need to be imported; `java.lang` is the core of the Java language, and is included in every project without importing.
+Each primitive data type has a corresponding object equivalent, called a **wrapper class**. The shenanigans that we've just explored with `String`s also apply to Java's eight wrapper classes. The `Integer` class compared that we discussed [above](#valueVsReference) is the `int` primitive's **wrapper classes**. The other primitives have similar wrappers; `char` has the `Character` class, `float` the `Float` class, and so on. In addition to being objects, these classes come with utilities in the form of useful methods. Find their documentation under the `java.lang` package in the [API](https://docs.oracle.com/javase/8/docs/api/). Wrapper classes do not need to be imported; `java.lang` is the core of the Java language, and is included in every project without importing.
 
-Wrapper objects are somewhat like `String`s, in that they behave like primitives in some cases and like objects in other cases.
-
-<a name="q10"></a>**EXERCISE 10** Write a program which prompts the user for a single character and then prints values denoting:
+<a name="q10"></a>**[EXERCISE 10](#a10)** Write a program which prompts the user for a single character and then prints values denoting:
 
 * whether the input character is in the english alphabet
 * whether the input character is a digit
-* the integer value of the character in unicode
+* the integer value of the character in unicode (in decimal)
 
-Use the `Character` wrapper class to determine whether the `char` is a digit or in the english alphabet. The `Scanner` doesn't have a `nextChar` method, but we discussed [here](#nextChar) how to get the first character of an input with the `Scanner`.
+You should use the [`Character`](https://docs.oracle.com/javase/8/docs/api/java/lang/Character.html) wrapper class to determine whether the `char` is a digit or in the english alphabet. All of the necessary functions are `static`; we'll cover what this means later on in this lab, but for this exercise you need to know that they're accessed from the `Character` class, and not from an instance of the class. For instance, to check if a `char` called `myChar` is from the english alphabet, you could do `Character.isAlphabetic( myChar )`. The `Scanner` doesn't have a `nextChar` method, but we discussed [here](#nextChar) how to get the first character of an input with the `Scanner`.
 
+
+# TODO continue editing from here
 ## What is a Class?
 
 The truth is, this question is a little too broad for the scope of this discussion. We are not going to all-inclusively define classes. We are going to instead talk about a few common types of classes, and the significance of classes in the Object-Oriented paradigm.
@@ -724,27 +733,88 @@ class GuessingGame
 
 The two `Point` variables, `origin` and `otherPoint`, both reference the same `Point` object because `otherPoint` is initialized with `Point otherPoint = origin;` and then never reassigned. The comment above this line isn't accurate; no second `Point` is created, a second reference is made to a pre-existing `Point`.
 
+### <a name="a4"></a>**[EXERCISE 4](#q4)**
+
+```java
+import java.awt.Point;
+
+class ReferenceDemo
+{
+    public static void main(String[] args)
+    {
+        // create a Point object with coordinates (0, 0)
+        Point origin = new Point(0, 0);
+
+        // create a second point at the same location
+        Point otherPoint = new Point(0,0);
+
+        // move the second point to (4, 3)
+        otherPoint.setLocation(4, 3);
+
+        // print out both points
+        System.out.println("The origin is at " + origin.toString());
+        System.out.println("The other point is at " + otherPoint.toString());
+        // oof
+    }
+}
+```
+
 ### <a name="a5"></a>**[EXERCISE 5](#q5)**
 
-Replace `point_1 == point_2` with `point_1.equals(point_2)`, so use the `Point` class's definition of equality (equal coordinates) instead of the generic object definition of equality (equal addresses).
+Replace `point_1 == point_2` with `point_1.equals(point_2)` to use the `Point` class's definition of equality (equal coordinates) instead of the generic object definition of equality (equal addresses).
 
-### <a name="q9"></a>**[EXERCISE 9](#a9)**
+### <a name="a6"></a>**[EXERCISE 6](#q6)**
+
+The program throws a `NullPointerException` on the line with the `scan.nextInt()` call. Here `scan` is `null`, so there is no reference to an object from which the `nextInt` method can be referenced. We could fix this by constructing a `Scanner` and assigning it to `scan` before making the `nextInt` call.
+
+### <a name="a9"></a>**[EXERCISE 9](#q9)**
 
 The `String` equivalent of `0` is the **empty string**, whose literal is `""` (i.e. `String myEmptyString = "";`). It is a `String` containing no characters.
 
-## Lab Assignment
+### <a name="a10"></a>**[EXERCISE 10](#q10)**
+
+```java
+import java.util.Scanner;
+
+public class CharacterClient
+{
+    public static void main(String[] args)
+    {
+        Scanner keyboard = new Scanner(System.in);
+
+        System.out.println("Enter a character:");
+        char userChar = keyboard.next().charAt(0);
+
+        System.out.println( userChar + " is in the English alphabet: " + Character.isAlphabetic(userChar) );
+        System.out.println( userChar + " is a digit: " + Character.isDigit(userChar) );
+        System.out.println( userChar + " is the number " + (int) userChar + " in unicode." );
+
+        // The unicode integer value can be done like below as well, but why bother?
+        // The int type can store char data, as discussed in a previous lab, specifically because
+        // chars are actually just ints with a standard (unicode) by which to decide which
+        // int represents which character
+        char[] userCharButInAnArrayBecauseWhyNot = {userChar};
+        System.out.println( userChar + " is the number " + Character.codePointAt(
+                userCharButInAnArrayBecauseWhyNot, 0) + " in unicode."
+        );
+    }
+}
+
+```
+
+# Lab Assignment
 
 Don't forget to document your work. Documentation should include descriptions of any classes and methods written, desciptions of any known issues, and sample runs.
 
 Your submission should consist of one or more IntelliJ projects zipped up with the documentation.
 
-### Task 1
+## Task 1
 
 Write a program which prompts the user for `int` values and uses them to create three instances of the `Point` class from `java.awt`. Use the `Point` class's `distance` method to calculate the distances between the three points**\*\***. These three distances are the side lengths for a triangle. Calculate and print the perimeter and area of the triangle (check out [Heron's formula](https://en.wikipedia.org/wiki/Heron%27s_formula) for the area).
 
 **\*\*** Not all of the `Point` class's methods are listed on its [API](https://docs.oracle.com/javase/8/docs/api/java/awt/Point.html) directly. Some methods are **inherited** from other classes. These methods are listed in the API at the bottom of the *Method Summary* section, in subsections called **Methods inherited from \<some\_other\_class\>**. We're not going to go in depth on what inheritance is right now; we'll talk about it later in the semester. For now, know that any `Point` can use the methods it inherits from other classes, because it **is** an instance of those classes. The `Point` class inherits from the `java.awt.geom.Point2D` class, which means a `Point` is a `Point2D`, but with some extra stuff. So, a `Point` can do anything a `Point2D` can do, including using and being an argument for the `Point2D.distance` method. Click one of the `distance` methods in the **Methods inherited from class java.awt.geom.Point2D** section.
 
-### Task 2
+## Task 2
 
 Run the [`FileClient`](#fileClient) with the debugger (with a break point on the line with `while`). You'll need to create a file called input.txt in the src folder (which the program will open) and add some (any) contents to it.
 
@@ -760,23 +830,21 @@ In your documentation, address the following:
 
 Try to create a different `while` statement which does something else.
 
-### Task 3
+## Task 3
 
 Create a class like the [`TemperatureConversion`](#temperatureConversion) class, but for converting angles between degrees and radians. Creat a client class to test it.
 
-## Bonus Tasks
-
-### Task 4
+## Task 4
 
 Expand your program from Task 1 to also print the angles in the triangle, in both degrees and radians. You might find the [law of cosines](https://en.wikipedia.org/wiki/Law_of_cosines) useful.
 
-### Task 5
+## Task 5
 
 Write a class containing a method which takes as an argument (i.e input) an integer and finds the corresponding [fibonacci number](https://en.wikipedia.org/wiki/Fibonacci_number). This will require either a loop or [recursion](https://en.wikipedia.org/wiki/Recursion).
 
 Create a client class to test this method.
 
-### Task 6
+## Task 6
 
 Create a class containing a method called `reverseString` which takes as input a `String` and returns that same `String`, backwards.
 
@@ -784,7 +852,7 @@ This will require a loop, and the `String`'s `charAt` method.
 
 You may also want to check out the [`StringBuilder`](https://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html), because repeatedly adding to `String`'s using concatenation is bad practice (it requires reallocation of memory for the entire `String` on each addition).
 
-### Task 7
+## Task 7
 
 Create a class with a method called `makeChange`. The method should take as an argument an integer, specifying a number of cents, and should return an array containing four integers denoting the number of quarters, dimes, nickels and pennies necessary to make the requested amount of change.
 
@@ -792,13 +860,13 @@ Write a client class to test your `makeChange` method.
 
 We haven't talked about arrays yet, so you'll need to do some research on how to create them, give them values, and access and modify those values.
 
-### Task 8
+## Task 8
 
 Write a program which asks the user for their birthday, and then prints the number of years, days, hours, minutes, and seconds until midnight at the start of their birthday.
 
 You do not need to ask the user for the current date and time, nor do you need to do any of the calculations by hand; find a class for storing and manipulating date-time data in Java and use it.
 
-### Task 9 
+## Task 9 
 
 Write a program which prompts the user for a date, and tells them what day of the week that date falls on by using the trick described [here](https://cs.uwaterloo.ca/~alopez-o/math-faq/node73.html).
 
