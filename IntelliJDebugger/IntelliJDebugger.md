@@ -2,7 +2,52 @@
 
 IntelliJ has a built-in debugger, which lets you step through your code line by line and check the values of variables and constants in the current scope.
 
-In the project consisting of the [`TemperatureConversion`](../README.md#temperatureConversion) class and its [client](#exClientClass) class, set a **break point** on the line with the statement `double tempInCelcius = 100;`. You can set a break point on any line by clicking in between the editor pane's line numbers and the text editor itself. A red dot will appear on the line, denoting that there is a break point there:
+We will be using these files to demonstrate the debugger:
+
+<a name="temperatureConversion"></a>
+
+```java
+class TemperatureConversion
+{
+    final static double CELC_FAHREN_RATIO = 9.0/5;
+    final static int FAHREN_FREEZE_POINT = 32;
+
+    // takes as an argument (input) the temperature in celcius (as a double)
+    // returns (outputs) the temperature in fahrenheit (as a double)
+    static double celcToFahren(double tempInCelc)
+    {
+        return tempInCelc * CELC_FAHREN_RATIO + FAHREN_FREEZE_POINT;
+    }
+
+    // argument : temperature in fahrenheit, as a double
+    // return : temperature in celcius, as a double
+    static double fahrenToCelc(double tempInFahren)
+    {
+        // TODO
+        return 0; // replace this return with a correct conversion
+    }
+}
+```
+
+<a name="exClientClass"></a>
+
+```java
+class TemperatureConversionClient
+{
+    public static void main(String[] args)
+    {
+        double tempInCelcius = 100;
+
+        double tempInFahrenheit = TemperatureConversion.celcToFahren( tempInCelcius );
+
+        System.out.println("Celcius : " + tempInCelcius);
+        System.out.println("is equivalent to");
+        System.out.println("Fahrenheit : " + tempInFahrenheit);
+    }
+}
+```
+
+In a project consisting of the [`TemperatureConversion`](../README.md#temperatureConversion) class and its [client](../README.md#exClientClass) class provided above, set a **break point** on the line with the statement `double tempInCelcius = 100;`. You can set a break point on any line by clicking in between the editor pane's line numbers and the text editor itself. A red dot will appear on the line, denoting that there is a break point there:
 
 ![Break Point](./figures/breakPoint.png)
 

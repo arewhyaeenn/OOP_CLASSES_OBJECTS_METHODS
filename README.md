@@ -504,7 +504,7 @@ The `return` keywords means "leave the method" or "return to the line from which
 
 Classes can contain a mix of data (in the form of constants and variables) and methods, and these pieces can interact. Below, we expand the `TemperatureConversion` class to include methods for performing conversions:
 
-<a name="temperatureConversion"></a>
+##  <a name="temperatureConversion"></a>
 
 ```java
 class TemperatureConversion
@@ -533,7 +533,7 @@ Classes like this generally do not have main methods; they instead provide a col
 
 Create a new IntelliJ project, and in it create two new Java classes in the `src` folder. The first class should be the `TemperatureConversion` class above. The second should be the client class below. This client class defines a main method and uses (**calls**) a method defined in `TemperatureConversion`.
 
-<a name="exClientClass"></a>
+# <a name="exClientClass"></a>
 
 ```java
 class TemperatureConversionClient
