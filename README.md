@@ -371,8 +371,6 @@ Each primitive data type has a corresponding object equivalent, called a **wrapp
 
 You should use the [`Character`](https://docs.oracle.com/javase/8/docs/api/java/lang/Character.html) wrapper class to determine whether the `char` is a digit or in the english alphabet. All of the necessary functions are `static`; we'll cover what this means later on in this lab, but for this exercise you need to know that they're accessed from the `Character` class, and not from an instance of the class. For instance, to check if a `char` called `myChar` is from the english alphabet, you could do `Character.isAlphabetic( myChar )`. The `Scanner` doesn't have a `nextChar` method, but we discussed [here](#nextChar) how to get the first character of an input with the `Scanner`.
 
-
-# TODO continue editing from here
 ## What is a Class?
 
 The truth is, this question is a little too broad for the scope of this discussion. We are not going to all-inclusively define classes. We are going to instead talk about a few common types of classes, and the significance of classes in the Object-Oriented paradigm.
@@ -381,7 +379,7 @@ The truth is, this question is a little too broad for the scope of this discussi
 
 Some classes will serve as blueprints for a new types of objects. A class like this can then be used to create objects (called **instances** of the class) which behave as the class defines. That is, the class defines how its **instance** objects store, mutate and provide access to their stored data, and how they interact with that data and with other entities.
 
-The `Scanner` class provides a blueprint for `Scanner` objects, defining how they are created and how they function. We've used this definition to create and use `Scanner` objects in several exercises already.
+The `Scanner` class provides a blueprint for `Scanner` objects, defining how they are **constructed** (created, "set up") and how they function. We've used this definition to create and use `Scanner` objects in several exercises already.
 
 In future labs, we will be exploring how to create classes that serve as object blueprints. These types of classes are the heart of Object-Oriented Programming.
 
@@ -393,10 +391,10 @@ Some classes will serve as collections of related `static` methods. We'll talk m
 
 Consider, for example, the `Math` class. It consists of:
 
-* methods that are called directly from the class itself, like `Math.pow` used in the last lab.
+* `static` methods, which are called directly from the class itself, like `Math.pow` used in the last lab.
 * constants, also accessed directly through the class, like `Math.PI`.
 
-An object of type `Math` is never created; we never make a `new Math()` like we did with the `Scanner`.
+An object of type `Math` is never created; we never make a `new Math()` like we did with the `Scanner`. To clarify, we **could** create a `new Math()` if we wanted to (we'll discuss why when we get to polymorphism and constructors in a future lab) but there is no reason to do so because the `Math` class doesn't have any nonstatic members.
 
 ### Client Classes
 
@@ -420,7 +418,7 @@ class TemperatureConversion
 
 The `TemperatureConversion` class above consists of two constant numbers which are useful in conversions between temperatures in Fahrenheit and Celcius. These constants can be accessed for use in other classes.
 
-We can access these values from other classes in the same package. We'll talk about package structure in a future lab, but for now, create two classes in the same project. One should be the `TemperatureConversion` class above, and one the `TemperatureConversionClient` class below:
+We can access these values from other classes in the same package. We'll talk about package structure and access in a future lab, but for now, create two classes in the same directory. One should be the `TemperatureConversion` class above, and one the `TemperatureConversionClient` class below:
 
 ```java
 class TemperatureConversionClient
@@ -446,18 +444,14 @@ When you run the `TemperatureConversionClient` above, it accesses the constants 
 
 ## Methods
 
-As mentioned in the previous section, a **method** is essentially a sequence of statements whose purpose is either to calculate a desired value or to perform a desired action or sequence of actions. 
-
-Before we begin discussing methods, lets go on a short linguistic tangent. Formally, functions and methods are not the same thing; methods are associated with a class or object, and functions are not. However, programmers in general choose to ignore this difference and use the words "method" and "function" interchangeably. Technically, there are no "functions" in Java, as everything is associated with a class or object, but nonetheless you'll hear the word "function" used in place of "method" in almost any context. The online debugger that we'll discuss later in this lab refers to methods as functions. This is a the programming equivalent of the Oxford comma.
-
-TLDR: as far as Java is concerned, "function" and "method" mean the same thing.
+As mentioned in the previous section, a **method** is essentially a sequence of statements whose purpose is either to calculate a desired value or to perform a desired action or sequence of actions.
 
 ### Declaring and Defining `static` Methods
 
 `static` method declarations and definitions appear in the **scope** of the class body. Class definitions looks like this:
 
 ```java
-class <identifier> { <body }
+class <identifier> { <body> }
 ```
 
 Though for readability's sake we usually write them like this:
@@ -469,7 +463,7 @@ class <identifier>
 }
 ```
 
-Something is said to be in the **scope** of the class body if it is in the curly braces `{}` denoting the boundaries of the class body. `static` method declarations appear in the class body but not inside any nested blocks.
+Something is said to be in the **scope** of the class body (or equivalently in the class body) if it is in the curly braces `{}` denoting the boundaries of the class body. Method declarations appear in the class body but not inside any nested blocks.
 
 The simplest `static` method definitions look like this:
 
@@ -504,14 +498,14 @@ We can tell from the header `static int subtract (int operand_1, int operand_2)`
 that:
 
 * The method is `static`, so it will be called directly through the `Calculator` class as `Calculator.subtract`.
-* It's return (i.e. output) is an `int` value.
+* It's `return` (i.e. output) is an `int` value.
 * It takes two `int` values as inputs, and refers to them as `operand_1` and `operand_2` during its calculation.
 
 The body of the method above consists of a single statement: `return (operand_1 - operand_2);`
 
 The `return` keywords means "leave the method" or "return to the line from which the method was called". If it is followed by an expression, then the value of that expression is the output or result of the method.
 
-<a name="q11"></a>**EXERCISE 11** Complete the `Calculator` class above by adding `int`methods `add`, `multiply`, `divide` and `modulus`. Then, create a client class to test the methods defined in the `Calculator` class.
+<a name="q11"></a>**[EXERCISE 11](#a11)** Complete the `Calculator` class above by adding `int`methods `add`, `multiply`, `divide` and `modulus`. Then, create a client class to test the methods defined in the `Calculator` class.
 
 ### Classes with Methods and Data
 
@@ -525,8 +519,8 @@ class TemperatureConversion
     final static double CELC_FAHREN_RATIO = 9.0/5;
     final static int FAHREN_FREEZE_POINT = 32;
 
-    // takes as an argument (input) the temperature in celcius (as a double)
-    // returns (outputs) the temperature in fahrenheit (as a double)
+    // takes as an argument the temperature in celcius (as a double)
+    // returns the temperature in fahrenheit (as a double)
     static double celcToFahren(double tempInCelc)
     {
         return tempInCelc * CELC_FAHREN_RATIO + FAHREN_FREEZE_POINT;
@@ -544,7 +538,7 @@ class TemperatureConversion
 
 Classes like this generally do not have main methods; they instead provide a collection of constants, variables and methods to facilitate some tasks in other programs. The `TemperatureConversion` class above can be accessed by other classes in the same project.
 
-Create a new IntelliJ project, and in it create two new Java classes in the `src` folder. The first class should be the `TemperatureConversion` class above. The second should be the client class below. This client class defines a main method and uses (**calls**) a method defined in `TemperatureConversion`.
+Create two new classes in the same directory. The first class should be the [`TemperatureConversion`](#temperatureConversion) class above. The second should be the [client](#exClientClass) class below. This client class defines a main method and uses (**calls**) a method defined in `TemperatureConversion`.
 
 <a name="exClientClass"></a>
 
@@ -564,7 +558,7 @@ class TemperatureConversionClient
 }
 ```
 
-If you run the client class above, it should use the `celcToFahren` method from the `TemperatureConversion` class to convert the Celcius temperature of `100` to the corresponding Fahrenheit (`212`) and print both temperatures.
+If you run the client class above, it should use the `celcToFahren` method from the `TemperatureConversion` class to convert the Celcius temperature of `100` to the corresponding Fahrenheit (`212`) and print both temperatures. Note that this is nowhere near an adequate test; it only tests a single conversion, from 100 Celcius to 212 Fahrenheit. Good tests contain a variety of test cases, with enough cases to confirm that the method(s) being tested work **in general**. Above, we're testing a linear formula, so two test cases should be enough, but there is no general answer for "how many test cases are needed"; this question is problem-specific.
 
 <a name="q12"></a>**EXERCISE 12** Complete the `TemperatureConversion` class above by filling out the `fahrenToCelc` method. Expand the client class above to test this new method.
 
@@ -615,13 +609,13 @@ The class above has a few things we haven't discussed yet, so let's go through t
 
 Let's first look at the constant `nonsense`. `nonsense` is a `String[]` (i.e. an array of `String`s). We'll discuss arrays in more detail later; for now it is sufficient to understand that the array stores the four `String`s seen in its assignment, and that they are associated with (and can be accessed using) the integers `0`, `1`, `2`, and `3`.
 
-There is also an `import` statement, which imports the `Random` class from `java.util`. Instances of the `Random` class can be used to generate random primitive values.
+There is also an `import` statement, which imports the `Random` class from `java.util`. Instances of the `Random` class can be used to generate random primitive values. We have used the `Random` class in a previous lab exercise, so you might be familiar with it.
 
 In the `hurlRandomNonsense` method, the instantiated `Random` object (called `generator`) is used to generate a random `int`. Specifically, it is used to generate random non-negative `int` less than `nonsense.length`, i.e. less than `4` (the length of the `nonsense` array). That is, `generator` is used to generate a random `int` with value `0`, `1`, `2`, or `3`.
 
 The random `int` is then used to access the corresponding `String` in the `nonsense` array, so it can be printed. The end result is: `hurlRandomNonsense` selects a random element from the `nonsense` array and prints it.
 
-Note that `hurlRandomNonsense` is of type `void`; it does not `return` anything. In fact, it doesn't even have a `return` keyword, so its execution ends when it reaches the closing curly braces `}` denoting the end of the method body.
+So, there's a lot going on, but the key takeaway here that `hurlRandomNonsense` is of type `void`; it does not `return` anything. In fact, it doesn't even have a `return` keyword, so its execution ends when it reaches the closing curly braces `}` denoting the end of the method body.
 
 <a name="q13"></a>**EXERCISE 13** Create a client class to test the `StringSlinger` class's `hurlRandomNonsense` method.
 
@@ -635,11 +629,13 @@ In most languages, there are both **methods** and **functions**. The two are sim
 
 In Java, there is no such thing as a function; processes cannot be defined outside of a class, so every definition is associated with either a class or with instances of a class.
 
+That being said, the formal difference between methods and functions is generally ignored by programmers; many professionals don't even know that there is a difference! Different sources will make contradicting claims about whether a difference exists and what the exact difference is. This is essentially the programmer's equivalent of the Oxford comma debate. In most contexts, the words "function" and "method" will be used interchangeably. One of the two debuggers that we'll discuss below refers to methods as functions, for instance. I've probably erroneously referred to methods as functions a few times already.
+
 ## Debuggers
 
 Next we will cover the use of debuggers, integrated into IDEs. Debuggers vary greatly between IDEs, but a few core features are usually approximately the same.
 
-Below are instructions for two debuggers. The first, for IntelliJ IDEA, will likely be useful to anyone using an IDE with an integrated debugger. If you are using an IDE without an integrated debugger(such as Cloud9) or if the IntelliJ IDEA debugger guide doesn't align with your IDE's debugger and it gives you a headache, you may want to use the OnlineGDB guide instead, as this will allow you to avoid installing a new IDE just for its debugger.
+Below are instructions for two debuggers. The first, for IntelliJ IDEA, will likely be useful to anyone using an IDE with an integrated debugger. If you are using an IDE without an integrated debugger (such as Cloud9) or if the IntelliJ IDEA debugger guide doesn't align with your IDE's debugger and it gives you a headache, you may want to use the OnlineGDB guide instead, as this will allow you to avoid installing a new IDE just for its debugger (though you might choose to do so afterward).
 
 [Debugging with IntelliJ IDEA](./IntelliJDebugger/IntelliJDebugger.md)
 
@@ -684,7 +680,7 @@ class Euclid
 
 ```
 
-<a name="q15"></a>**EXERCISE 15** Step through the `gcd` with the debugger, and see if you can figure out how it works!
+<a name="q15"></a>**EXERCISE 15** Step through the `gcd` with the debugger, and see if you can figure out how it works! Don't stress too much about getting a formal understanding of why it works, just aim for a loose understanding of how; you'll cover this exact algorithm in detail in at least one future class, and likely in several.
 
 ## Answers to Selected Exercises
 
@@ -799,14 +795,62 @@ public class CharacterClient
         );
     }
 }
+```
 
+### <a name="a11"></a>**[EXERCISE 11](#q11)**
+
+```java
+class Calculator
+{
+    static int add (int operand_1, int operand_2)
+    {
+        return operand_1 + operand_2;
+    }
+
+    static int subtract (int operand_1, int operand_2)
+    {
+        return operand_1 - operand_2;
+    }
+
+    static int multiply (int operand_1, int operand_2)
+    {
+        return operand_1 * operand_2;
+    }
+
+    static int divide (int operand_1, int operand_2)
+    {
+        return operand_1 / operand_2;
+    }
+}
+```
+
+```java
+import java.util.Scanner;
+
+class CalculatorClient
+{
+    public static void main(String[] args)
+    {
+        Scanner console = new Scanner(System.in);
+
+        System.out.println("Enter two integer operands:");
+
+        int op1 = console.nextInt();
+        int op2 = console.nextInt();
+
+        System.out.println("Calculator.add(" + op1+ ", " + op2 + ") returns : " + Calculator.add(op1, op2));
+        System.out.println("Calculator.subtract(" + op1+ ", " + op2 + ") returns : " + Calculator.subtract(op1, op2));
+        System.out.println("Calculator.multiply(" + op1+ ", " + op2 + ") returns : " + Calculator.multiply(op1, op2));
+        System.out.println("Calculator.divide(" + op1+ ", " + op2 + ") returns : " + Calculator.divide(op1, op2));
+    }
+}
 ```
 
 # Lab Assignment
 
-Don't forget to document your work. Documentation should include descriptions of any classes and methods written, desciptions of any known issues, and sample runs.
+Tasks 1-6 must all be done.
 
-Your submission should consist of one or more IntelliJ projects zipped up with the documentation.
+Tasks 7-9 ask you to research Java functionality that we haven't covered yet; do at least one of these tasks.
 
 ## Task 1
 
@@ -830,46 +874,50 @@ In your documentation, address the following:
 
 Try to create a different `while` statement which does something else.
 
+Your submission should be your java file with a new `while` statement, any input files that it uses (if applicable), and screenshots of its output. Your theorizing about the `while` statement should be commented in your java file.
+
 ## Task 3
 
 Create a class like the [`TemperatureConversion`](#temperatureConversion) class, but for converting angles between degrees and radians. Creat a client class to test it.
+
+You will find the `Math.PI` constant useful here (don't hard-code a worse approximation, like `3.14`).
 
 ## Task 4
 
 Expand your program from Task 1 to also print the angles in the triangle, in both degrees and radians. You might find the [law of cosines](https://en.wikipedia.org/wiki/Law_of_cosines) useful.
 
+The `Math` class contains trigonometric functions including `sin`, `cos`, `asin` and `acos`.
+
 ## Task 5
 
-Write a class containing a method which takes as an argument (i.e input) an integer and finds the corresponding [fibonacci number](https://en.wikipedia.org/wiki/Fibonacci_number). This will require either a loop or [recursion](https://en.wikipedia.org/wiki/Recursion).
+Write a program which prompts the user for a date, and tells them what day of the week that date falls on by using the trick described [here](https://cs.uwaterloo.ca/~alopez-o/math-faq/node73.html).
 
-Create a client class to test this method.
+Then, write a second program which instead uses an imported class to perform the same task (you'll need to do some google searching to determine which class to use).
+
+In comments, reflect on your implementations. Which is easier to implement, once you're familiar with all of the classes being used?
 
 ## Task 6
 
-Create a class containing a method called `reverseString` which takes as input a `String` and returns that same `String`, backwards.
+Write a program which asks the user for their birthday, and then prints the number of years, days, hours, minutes, and seconds until midnight at the start of their birthday.
 
-This will require a loop, and the `String`'s `charAt` method.
-
-You may also want to check out the [`StringBuilder`](https://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html), because repeatedly adding to `String`'s using concatenation is bad practice (it requires reallocation of memory for the entire `String` on each addition).
+You do not need to ask the user for the current date and time, nor do you need to do any of the calculations by hand; find a class for storing and manipulating date-time data in Java and use it.
 
 ## Task 7
+
+Write a class containing a method which takes as an argument an integer `n` and finds the n'th [fibonacci number](https://en.wikipedia.org/wiki/Fibonacci_number). This will require either a loop or [recursion](https://en.wikipedia.org/wiki/Recursion).
+
+Create a client class to test this method.
+
+## Task 8
+
+Create a class containing a method called `reverseString` which takes as input a `String` and returns that same `String`, backwards.
+
+This can be done with a loop and the `String` class's `charAt` method, or it can be done using an appropriate method from the [`StringBuilder`](https://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html) class.
+
+## Task 9
 
 Create a class with a method called `makeChange`. The method should take as an argument an integer, specifying a number of cents, and should return an array containing four integers denoting the number of quarters, dimes, nickels and pennies necessary to make the requested amount of change.
 
 Write a client class to test your `makeChange` method.
 
 We haven't talked about arrays yet, so you'll need to do some research on how to create them, give them values, and access and modify those values.
-
-## Task 8
-
-Write a program which asks the user for their birthday, and then prints the number of years, days, hours, minutes, and seconds until midnight at the start of their birthday.
-
-You do not need to ask the user for the current date and time, nor do you need to do any of the calculations by hand; find a class for storing and manipulating date-time data in Java and use it.
-
-## Task 9 
-
-Write a program which prompts the user for a date, and tells them what day of the week that date falls on by using the trick described [here](https://cs.uwaterloo.ca/~alopez-o/math-faq/node73.html).
-
-Then, write a second program which instead uses an imported class to perform the same task.
-
-In your documentation, reflect on your implementations. Which is easier to implement, once you're familiar with all of the classes being used?
