@@ -9,7 +9,7 @@ In this lab:
 * What is a class?
 * Wrapper classes.
 * Methods, writing `static` methods.
-* Using IntelliJ's debugger.
+* Using Debuggers
 
 ## Importing
 
@@ -437,7 +437,11 @@ When you run the `TemperatureConversionClient` above, it accesses the constants 
 
 ## Methods
 
-As mentioned in the previous section, a **method** is essentially a sequence of statements whose purpose is either to calculate a desired value or to perform a desired action or sequence of actions.
+As mentioned in the previous section, a **method** is essentially a sequence of statements whose purpose is either to calculate a desired value or to perform a desired action or sequence of actions. 
+
+Before we begin discussing methods, lets go on a short linguistic tangent. Formally, functions and methods are not the same thing; methods are associated with a class or object, and functions are not. However, programmers in general choose to ignore this difference and use the words "method" and "function" interchangeably. Technically, there are no "functions" in Java, as everything is associated with a class or object, but nonetheless you'll hear the word "function" used in place of "method" in almost any context. The online debugger that we'll discuss later in this lab refers to methods as functions. This is a the programming equivalent of the Oxford comma.
+
+TLDR: as far as Java is concerned, "function" and "method" mean the same thing.
 
 ### Declaring and Defining `static` Methods
 
@@ -504,7 +508,7 @@ The `return` keywords means "leave the method" or "return to the line from which
 
 Classes can contain a mix of data (in the form of constants and variables) and methods, and these pieces can interact. Below, we expand the `TemperatureConversion` class to include methods for performing conversions:
 
-##  <a name="temperatureConversion"></a>
+<a name="temperatureConversion"></a>
 
 ```java
 class TemperatureConversion
@@ -533,7 +537,7 @@ Classes like this generally do not have main methods; they instead provide a col
 
 Create a new IntelliJ project, and in it create two new Java classes in the `src` folder. The first class should be the `TemperatureConversion` class above. The second should be the client class below. This client class defines a main method and uses (**calls**) a method defined in `TemperatureConversion`.
 
-# <a name="exClientClass"></a>
+<a name="exClientClass"></a>
 
 ```java
 class TemperatureConversionClient
@@ -622,7 +626,15 @@ In most languages, there are both **methods** and **functions**. The two are sim
 
 In Java, there is no such thing as a function; processes cannot be defined outside of a class, so every definition is associated with either a class or with instances of a class.
 
-## TODO DEBUGGER SECTION
+## Debuggers
+
+Next we will cover the use of debuggers, integrated into IDEs. Debuggers vary greatly between IDEs, but a few core features are usually approximately the same.
+
+Below are instructions for two debuggers. The first, for IntelliJ IDEA, will likely be useful to anyone using an IDE with an integrated debugger. If you are using an IDE without an integrated debugger(such as Cloud9) or if the IntelliJ IDEA debugger guide doesn't align with your IDE's debugger and it gives you a headache, you may want to use the OnlineGDB guide instead, as this will allow you to avoid installing a new IDE just for its debugger.
+
+[Debugging with IntelliJ IDEA](./IntelliJDebugger/IntelliJDebugger.md)
+
+[Debugging with OnlineGDB](./OnlineGDB/OnlineGDB.md)
 
 <a name="q14"></a>**EXERCISE 14** The `Euclid` class below defines a method called `gcd` which finds the [greatest common divisor](https://en.wikipedia.org/wiki/Greatest_common_divisor) of two non-negative `int`s `x` and `y` (or outputs `0`, if one of the inputs is negative). It contains some functionality that we haven't explored yet. But, we don't necessarily need to understand how it works in order to use it, as long as we know what its output is. Create a client class to test the `gcd` method.
 
