@@ -15,7 +15,7 @@ In this lab:
 
 **packages** contain organized sets of classes, generally with some unifying purpose. They can also contain smaller packages, known as **subpackages**.
 
-If you check the [Java 8 API](https://docs.oracle.com/javase/8/docs/api/), you can see a list of packages available in the Java 8 Standard Edition platform (these are the packages that are available in the Java Development Kit installed on your cloud server or your home computer, depending on your IDE).
+If you check the [Java 8 API](https://docs.oracle.com/javase/8/docs/api/), you can see a list of packages available in the Java 8 Standard Edition platform (these are the packages that are available in the Java Development Kit installed on your cloud server or your home computer, depending on your IDE). The acronym **API** is short for **A**pplication **P**rogramming **I**nterface. API for a class tells users how to use the class; in other words, it documents the interface provided by the class through which users can interact with it. We will be looking at the Java API constantly.
 
 Classes can be imported using `import` statements, which are generally at the top of the program outside of the class definition. `import` statments consist of the `import` keyword followed by the name of the package being imported, a `.` (accessor operator) to access a member of that package, and then the class name (the package member being accessed). They look like this: `import <package>.<class>;`.
 
@@ -29,7 +29,7 @@ Note that the class name `Scanner` is in `PascalCase` while the package and subp
 
 ## The `Scanner` Class
 
-We used the `Scanner` class briefly in the previous lab, so you might be familiar with it already. It can be used to parse primitive data from an input source. The input source might be a text file, a `String`, or an `InputStream`. For now, we don't need to know what an `InputStream` is, exactly, we just need to know that there is one called `System.in` which corresponds to input typed in the console, so if we use that `InputStream` as a source, the `Scanner` can be used to get input from the console and parse it.
+We used the `Scanner` class briefly in the previous lab, so you might be familiar with it already. It can be used to parse primitive data from an input source. The input source might be a text file, a `String`, or an `InputStream`. For now, we don't need to know what an `InputStream` is, exactly, we just need to know that there is one called `System.in` which corresponds to input typed in the console, so if we use that `InputStream` as a source, the `Scanner` can be used to get input from the console and parse it. While reading from the source, it divides the inputs into sequences called **tokens**, which are sequences of characters which together have some meaning. For instance, several digits in a row would be grouped as an integer token.
 
 In order to use a `Scanner`, we must **construct** it. The `Scanner` class is essentially a blueprint, which can be used to construct `Scanner` objects associated with specific input sources. The constructed `Scanner` object is said to be an **instance** of the `Scanner` class.
 
@@ -242,6 +242,8 @@ class ReferenceDemo
 
 ### Address Comparisons Example
 
+Before we consider the example below, let's briefly discuss the `==` operator. We've already seen this operator once or twice without any formal explanation. `==` is the equality operator, not to be confused with the assignment operator `=`. The equality operator takes two inputs (the elements to its left and right) and returns `true` if they are equal and `false` otherwise.
+
 Consider the following class:
 
 ```java
@@ -307,7 +309,9 @@ class NullClient
 
 ### `String`: Primitive or Object?
 
-Java `String`s are a blight inflicted on developers by James Gosling. In some contexts they behave like objects, but in other contexts they behave like primitives. In some contexts treating them like primitives leads to issues and errors, and in other contexts treating them like objects leads to issues and errors.
+Java `String`s are a blight inflicted on developers by James Gosling. In some contexts they behave like objects, but in other contexts they behave like primitives. In some contexts treating them like primitives leads to issues and errors.
+
+Let's be clear: `String`s are objects. There are situations in which they behave more like primitives. So, while you can sometimes treat them like primitives and get away with it, you can **always** treat them like objects.
 
 `String`s can be compared to eachother with the `==` operator like primitives, but only if they were created without the `new` keyword; if they were created as references (via object construction, using the `new` keyword) then the `==` operator will compare addresses instead of values like in the `ReferenceEquality` class above. Treating `String`'s like objects and using their `equals` method to check for equal values will always work, regardless of how the `String` was declared.
 
@@ -361,7 +365,7 @@ System.out.println( s1.equals(s2) );
 
 ### Wrapper Classes
 
-Each primitive data type has a corresponding object equivalent, called a **wrapper class**. The shenanigans that we've just explored with `String`s also apply to Java's eight wrapper classes. The `Integer` class compared that we discussed [above](#valueVsReference) is the `int` primitive's **wrapper classes**. The other primitives have similar wrappers; `char` has the `Character` class, `float` the `Float` class, and so on. In addition to being objects, these classes come with utilities in the form of useful methods. Find their documentation under the `java.lang` package in the [API](https://docs.oracle.com/javase/8/docs/api/). Wrapper classes do not need to be imported; `java.lang` is the core of the Java language, and is included in every project without importing.
+Each primitive data type has a corresponding object equivalent, called a **wrapper class**. The shenanigans that we've just explored with `String`s also apply to Java's eight wrapper classes. The `Integer` class that we discussed [above](#valueVsReference) is the `int` primitive's wrapper. The other primitives have similar wrappers; `char` has the `Character` class, `float` the `Float` class, and so on. In addition to instantiating objects, these classes come with utilities which the primitives lack, in the form of useful methods. Find their documentation under the `java.lang` package in the [API](https://docs.oracle.com/javase/8/docs/api/). Wrapper classes do not need to be imported; `java.lang` is the core of the Java language, and is included in every project without importing.
 
 <a name="q10"></a>**[EXERCISE 10](#a10)** Write a program which prompts the user for a single character and then prints values denoting:
 
@@ -387,12 +391,12 @@ In future labs, we will be exploring how to create classes that serve as object 
 
 Some classes will serve as collections of related `static` methods. We'll talk more about methods in the next section, but they are essentially sequences of statements whose purpose is either to calculate a value or to perform an action. 
 
-`static` methods are called directly from a class, and do not require a reference to an individual instance of the class. Nonstatic methods, on the other hand, are called from an individual instance of the class and may reference data stored by that instance.
+`static` members are accessed directly from a class, and do not require a reference to an individual instance of the class. Nonstatic members, on the other hand, are accessed from an individual instance of the class and may reference data stored by that instance.
 
 Consider, for example, the `Math` class. It consists of:
 
 * `static` methods, which are called directly from the class itself, like `Math.pow` used in the last lab.
-* constants, also accessed directly through the class, like `Math.PI`.
+* `static` constants, also accessed directly through the class, like `Math.PI`.
 
 An object of type `Math` is never created; we never make a `new Math()` like we did with the `Scanner`. To clarify, we **could** create a `new Math()` if we wanted to (we'll discuss why when we get to polymorphism and constructors in a future lab) but there is no reason to do so because the `Math` class doesn't have any nonstatic members.
 
@@ -848,9 +852,9 @@ class CalculatorClient
 
 # Lab Assignment
 
-Tasks 1-6 must all be done.
+Tasks 1-7 must all be done.
 
-Tasks 7-9 ask you to research Java functionality that we haven't covered yet; do at least one of these tasks.
+Tasks 8-10 ask you to research Java functionality that we haven't covered yet; do at least one of these tasks.
 
 ## Task 1
 
@@ -904,17 +908,24 @@ You do not need to ask the user for the current date and time, nor do you need t
 
 ## Task 7
 
+Write a program which prompts the user for 2 integers, and calculate their quotient (using floating point division). Use the [`DecimalFormat`](https://docs.oracle.com/javase/8/docs/api/java/text/DecimalFormat.html) class to print the quotient:
+
+* As a decimal number, with only two digits shown after the decimal point
+* As a percentage, again with only 2 digits shown after the decimal point.
+
+## Task 8
+
 Write a class containing a method which takes as an argument an integer `n` and finds the n'th [fibonacci number](https://en.wikipedia.org/wiki/Fibonacci_number). This will require either a loop or [recursion](https://en.wikipedia.org/wiki/Recursion).
 
 Create a client class to test this method.
 
-## Task 8
+## Task 9
 
 Create a class containing a method called `reverseString` which takes as input a `String` and returns that same `String`, backwards.
 
 This can be done with a loop and the `String` class's `charAt` method, or it can be done using an appropriate method from the [`StringBuilder`](https://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html) class.
 
-## Task 9
+## Task 10
 
 Create a class with a method called `makeChange`. The method should take as an argument an integer, specifying a number of cents, and should return an array containing four integers denoting the number of quarters, dimes, nickels and pennies necessary to make the requested amount of change.
 
