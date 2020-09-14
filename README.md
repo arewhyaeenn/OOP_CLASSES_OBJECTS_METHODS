@@ -84,7 +84,7 @@ The `Scanner` reads characters from the input source one at a time and parses th
 
 Note that there is an extra call to the `nextLine` method before the second question. This is due to an oddity of how the `Scanner` interacts with its input source:
 
-When a `Scanner` calls a method to read a primitive or the `next` method to read a word, it leaves the newline at the start of the input. This will cause the next `newLine` call to be blank; it reads until the first newline, and the first character in the stream is a newline. So, that extra call to the `nextLine` method before the second question in the program above is to read this residual newline character out of the input stream, which in turn allows the following `nextLine` call to get the user's input instead of a blank line.
+When a `Scanner` calls a method to read a primitive or the `next` method to read a word, it leaves the newline at the start of the input. This will cause the next `nextLine` call to be blank; it reads until the first newline, and the first character in the stream is a newline. So, that extra call to the `nextLine` method before the second question in the program above is to read this residual newline character out of the input stream, which in turn allows the following `nextLine` call to get the user's input instead of a blank line.
 
 Here is a sample run for the program:
 
@@ -116,7 +116,7 @@ Process finished with exit code 0
 1. Prompts the user for two integer values `minimum` and `maximum`.
 2. Generates a random `int` called `secretNumber` from `minimum` to `maximum`, inclusive.
 	* Check out the [`Random`](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) class in the `java.util` package.
-	* You could find the documentation linked above very easily by googling "Java 8 Random).
+	* You could find the documentation linked above very easily by googling "Java 8 Random".
 	* You'll need to
 		* Import the class
 		* Construct an instance of it (something like `Random generator = new Random();`)
