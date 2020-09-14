@@ -359,6 +359,14 @@ String s2 = new String("asdf");
 System.out.println( s1.equals(s2) );
 ```
 
+```java
+String s1 = "asd";
+s1 += "f";
+String s2 = "asdf";
+
+System.out.println( s1 == s2 );
+```
+
 <a name="q8"></a>**EXERCISE 8** Write a program in which you try to set a `String` variable's value to `null`, a primitive variable's value to `null`, and any object variable to `null`. Which ones work? Is the `String` behaving like an object or like a primitive?
 
 <a name="q9"></a>**[EXERCISE 9](#a9)** `String`s can be `null`, but there is another `String` literal that is often used to represent the `String` equivalent of `0`. What `String` value do you think this would be?
