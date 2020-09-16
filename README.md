@@ -890,7 +890,7 @@ Your submission should be your java file with a new `while` statement, any input
 
 ## Task 3
 
-Create a class like the [`TemperatureConversion`](#temperatureConversion) class, but for converting angles between degrees and radians. Creat a client class to test it.
+Create a class like the [`TemperatureConversion`](#temperatureConversion) class, but for converting angles between degrees and radians. Create a client class to test it.
 
 You will find the `Math.PI` constant useful here (don't hard-code a worse approximation, like `3.14`).
 
