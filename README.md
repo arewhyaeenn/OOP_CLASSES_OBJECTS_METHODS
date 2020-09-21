@@ -492,7 +492,7 @@ where:
 * `<identifier>` is the name that will be used to **call** (i.e. reference, perform) the method.
 * The `<argument_list>` is, well, a list of **arguments**, separated by commas. 
 
-Recall that **arguments** are the input data for the function. They are structured much like declarations; the consist of a data type followed by an identifier.
+Recall that **arguments** are the input data for the function. They are structured much like declarations; they consist of a data type followed by an identifier.
 
 Consider the method definition in the `Calculator` class below:
 
