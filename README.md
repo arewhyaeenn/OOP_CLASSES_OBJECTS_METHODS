@@ -910,7 +910,7 @@ In comments, reflect on your implementations. Which is easier to implement, once
 
 ## Task 6
 
-Write a program which asks the user for their birthday, and then prints the number of years, days, hours, minutes, and seconds until midnight at the start of their birthday.
+Write a program which asks the user for their birthday, and then prints the number of days, hours, minutes, and seconds until midnight at the start of their birthday.
 
 You do not need to ask the user for the current date and time, nor do you need to do any of the calculations by hand; find a class for storing and manipulating date-time data in Java and use it.
 
