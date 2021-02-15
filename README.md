@@ -860,15 +860,11 @@ class CalculatorClient
 
 # Lab Assignment
 
-Tasks 1-7 must all be done.
-
-Tasks 8-10 ask you to research Java functionality that we haven't covered yet; do at least one of these tasks.
-
 ## Task 1
 
 Write a program which prompts the user for `int` values and uses them to create three instances of the `Point` class from `java.awt`. Use the `Point` class's `distance` method to calculate the distances between the three points**\*\***. These three distances are the side lengths for a triangle. Calculate and print the perimeter and area of the triangle (check out [Heron's formula](https://en.wikipedia.org/wiki/Heron%27s_formula) for the area).
 
-**\*\*** Not all of the `Point` class's methods are listed on its [API](https://docs.oracle.com/javase/8/docs/api/java/awt/Point.html) directly. Some methods are **inherited** from other classes. These methods are listed in the API at the bottom of the *Method Summary* section, in subsections called **Methods inherited from \<some\_other\_class\>**. We're not going to go in depth on what inheritance is right now; we'll talk about it later in the semester. For now, know that any `Point` can use the methods it inherits from other classes, because it **is** an instance of those classes. The `Point` class inherits from the `java.awt.geom.Point2D` class, which means a `Point` is a `Point2D`, but with some extra stuff. So, a `Point` can do anything a `Point2D` can do, including using and being an argument for the `Point2D.distance` method. Click one of the `distance` methods in the **Methods inherited from class java.awt.geom.Point2D** section.
+**\*\*** Not all of the `Point` class's methods are listed on its [API](https://docs.oracle.com/javase/8/docs/api/java/awt/Point.html) directly. Some methods are **inherited** from other classes. These methods are listed in the API at the bottom of the *Method Summary* section, in subsections called **Methods inherited from \<some\_other\_class\>**. We're not going to go in depth on what inheritance is right now; we'll talk about it later in the semester. For now, know that any `Point` can use the methods that it inherits from other classes, because it **is** an instance of those classes. The `Point` class inherits from the `java.awt.geom.Point2D` class, which means a `Point` is a `Point2D`, but with some extra stuff. So, a `Point` can do anything a `Point2D` can do, including using and being an argument for the `Point2D.distance` method. Click one of the `distance` methods in the **Methods inherited from class java.awt.geom.Point2D** section.
 
 ## Task 2
 
@@ -900,7 +896,7 @@ Expand your program from Task 1 to also print the angles in the triangle, in bot
 
 The `Math` class contains trigonometric functions including `sin`, `cos`, `asin` and `acos`.
 
-## Task 5
+## Task 5 (Optional)
 
 Write a program which prompts the user for a date, and tells them what day of the week that date falls on by using the trick described [here](https://cs.uwaterloo.ca/~alopez-o/math-faq/node73.html).
 
@@ -921,19 +917,19 @@ Write a program which prompts the user for 2 integers, and calculate their quoti
 * As a decimal number, with only two digits shown after the decimal point
 * As a percentage, again with only 2 digits shown after the decimal point.
 
-## Task 8
+## Task 8 (Optional)
 
-Write a class containing a method which takes as an argument an integer `n` and finds the n'th [fibonacci number](https://en.wikipedia.org/wiki/Fibonacci_number). This will require either a loop or [recursion](https://en.wikipedia.org/wiki/Recursion).
+Write a class containing a method which takes as an argument an integer `n` and finds the n'th [fibonacci number](https://en.wikipedia.org/wiki/Fibonacci_number). This will require either a loop or [recursion](https://en.wikipedia.org/wiki/Recursion), which will in turn require some research.
 
 Create a client class to test this method.
 
-## Task 9
+## Task 9 (Optional)
 
 Create a class containing a method called `reverseString` which takes as input a `String` and returns that same `String`, backwards.
 
 This can be done with a loop and the `String` class's `charAt` method, or it can be done using an appropriate method from the [`StringBuilder`](https://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html) class.
 
-## Task 10
+## Task 10 (Optional)
 
 Create a class with a method called `makeChange`. The method should take as an argument an integer, specifying a number of cents, and should return an array containing four integers denoting the number of quarters, dimes, nickels and pennies necessary to make the requested amount of change.
 
